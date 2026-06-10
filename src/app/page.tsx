@@ -1,65 +1,194 @@
-import Image from "next/image";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Banknote,
+  CalendarClock,
+  Globe2,
+  GraduationCap,
+  Megaphone,
+  Mic2,
+  FlaskConical,
+  HeartHandshake,
+  Trophy,
+} from "lucide-react";
+import { db } from "@/lib/db";
+import { Hero } from "@/components/hero";
+import { CountUp } from "@/components/count-up";
+import { FadeIn, Stagger, StaggerItem } from "@/components/animated";
+import { OpportunityCard } from "@/components/opportunity-card";
+import { Button } from "@/components/ui/button";
+import { typeLabels } from "@/lib/format";
+import type { OpportunityType } from "@prisma/client";
 
-export default function Home() {
+export const revalidate = 300;
+
+const categoryIcons: Partial<Record<OpportunityType, React.ReactNode>> = {
+  CONFERENCE: <Mic2 className="size-5" />,
+  WORKSHOP: <FlaskConical className="size-5" />,
+  TRAINING: <GraduationCap className="size-5" />,
+  FELLOWSHIP: <Trophy className="size-5" />,
+  VOLUNTEER: <HeartHandshake className="size-5" />,
+  CFP_CONFERENCE: <Megaphone className="size-5" />,
+  CFP_JOURNAL: <Megaphone className="size-5" />,
+  GRANT: <Banknote className="size-5" />,
+  HACKATHON: <Globe2 className="size-5" />,
+};
+
+export default async function HomePage() {
+  const now = new Date();
+  const in30days = new Date(now.getTime() + 30 * 86_400_000);
+
+  const [total, closingSoonCount, fundedCount, countryGroups, closingSoon, byType] =
+    await Promise.all([
+      db.opportunity.count({ where: { status: "APPROVED" } }),
+      db.opportunity.count({
+        where: { status: "APPROVED", deadline: { gte: now, lte: in30days } },
+      }),
+      db.opportunity.count({
+        where: { status: "APPROVED", funding: "FULLY_FUNDED" },
+      }),
+      db.opportunity.groupBy({
+        by: ["country"],
+        where: { status: "APPROVED", country: { not: null } },
+      }),
+      db.opportunity.findMany({
+        where: { status: "APPROVED", deadline: { gte: now } },
+        orderBy: { deadline: "asc" },
+        take: 6,
+      }),
+      db.opportunity.groupBy({
+        by: ["type"],
+        where: { status: "APPROVED" },
+        _count: true,
+      }),
+    ]);
+
+  const stats = [
+    { label: "Open opportunities", value: total },
+    { label: "Deadlines in 30 days", value: closingSoonCount },
+    { label: "Fully funded", value: fundedCount },
+    { label: "Countries covered", value: countryGroups.length },
+  ];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div>
+      <Hero />
+
+      {/* Stats */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6">
+        <Stagger className="grid grid-cols-2 gap-4 rounded-2xl border border-border/70 bg-card/60 p-6 backdrop-blur sm:grid-cols-4 sm:p-8">
+          {stats.map((s) => (
+            <StaggerItem key={s.label} className="text-center">
+              <p className="text-3xl font-bold tabular-nums tracking-tight sm:text-4xl">
+                <CountUp value={s.value} />
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{s.label}</p>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </section>
+
+      {/* Closing soon */}
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+        <FadeIn className="mb-8 flex items-end justify-between gap-4">
+          <div>
+            <h2 className="flex items-center gap-2 text-2xl font-bold tracking-tight sm:text-3xl">
+              <CalendarClock className="size-6 text-violet-500" /> Closing soon
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Don&apos;t let these deadlines slip by.
+            </p>
+          </div>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground"
+            render={<Link href="/opportunities" />}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+            View all <ArrowRight className="size-4" />
+          </Button>
+        </FadeIn>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {closingSoon.map((opp, i) => (
+            <OpportunityCard
+              key={opp.id}
+              index={i}
+              opp={{
+                slug: opp.slug,
+                title: opp.title,
+                description: opp.description,
+                type: opp.type,
+                deadline: opp.deadline?.toISOString() ?? null,
+                city: opp.city,
+                country: opp.country,
+                online: opp.online,
+                funding: opp.funding,
+                field: opp.field,
+              }}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          ))}
         </div>
-      </main>
+      </section>
+
+      {/* Browse by category */}
+      <section className="border-y border-border/60 bg-muted/30">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+          <FadeIn>
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
+              Browse by category
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Every kind of opportunity, one directory.
+            </p>
+          </FadeIn>
+          <Stagger className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {byType
+              .sort((a, b) => b._count - a._count)
+              .map((t) => (
+                <StaggerItem key={t.type}>
+                  <Link
+                    href={`/opportunities?type=${t.type}`}
+                    className="group flex items-center gap-3 rounded-xl border border-border/70 bg-card/80 p-4 transition-all hover:-translate-y-0.5 hover:border-violet-500/40 hover:shadow-lg hover:shadow-violet-500/10"
+                  >
+                    <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-violet-500/15 to-cyan-400/15 text-violet-500 dark:text-violet-400">
+                      {categoryIcons[t.type] ?? <Globe2 className="size-5" />}
+                    </span>
+                    <span>
+                      <span className="block text-sm font-semibold">
+                        {typeLabels[t.type]}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        {t._count} open
+                      </span>
+                    </span>
+                  </Link>
+                </StaggerItem>
+              ))}
+          </Stagger>
+        </div>
+      </section>
+
+      {/* Origin story CTA */}
+      <section className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 sm:py-24">
+        <FadeIn>
+          <h2 className="text-balance text-2xl font-bold tracking-tight sm:text-3xl">
+            Built because one email almost didn&apos;t arrive
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-balance text-muted-foreground">
+            OpenOpps exists because a fully funded workshop was discovered only
+            through a professor&apos;s passing mention. Great opportunities
+            shouldn&apos;t depend on who you happen to know — they should be open
+            to everyone.
+          </p>
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+            <Button size="lg" render={<Link href="/about" />}>
+              Read the story
+            </Button>
+            <Button size="lg" variant="outline" render={<Link href="/submit" />}>
+              Submit an opportunity
+            </Button>
+          </div>
+        </FadeIn>
+      </section>
     </div>
   );
 }
