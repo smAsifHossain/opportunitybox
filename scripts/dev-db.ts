@@ -16,6 +16,8 @@ async function main() {
     password: "postgres",
     port: 5432,
     persistent: true,
+    // UTF8 regardless of OS locale — source data contains non-Latin text.
+    initdbFlags: ["--encoding=UTF8", "--locale=C"],
   });
 
   const fs = await import("node:fs");
