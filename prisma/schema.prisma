@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum OpportunityType {
+  CONFERENCE
+  WORKSHOP
+  TRAINING
+  FELLOWSHIP
+  VOLUNTEER
+  CFP_CONFERENCE
+  CFP_JOURNAL
+  GRANT
+  HACKATHON
+  OTHER
+}
+
+enum FundingLevel {
+  FULLY_FUNDED
+  PARTIALLY_FUNDED
+  NOT_FUNDED
+  UNKNOWN
+}
+
+enum OpportunityStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+enum OpportunityOrigin {
+  INGESTED
+  COMMUNITY
+  ADMIN
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum RunStatus {
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+model Opportunity {
+  id              String            @id @default(cuid())
+  slug            String            @unique
+  title           String
+  description     String
+  type            OpportunityType
+  homepageUrl     String
+  applyUrl        String?
+  deadline        DateTime?
+  startDate       DateTime?
+  endDate         DateTime?
+  city            String?
+  country         String?
+  online          Boolean           @default(false)
+  funding         FundingLevel      @default(UNKNOWN)
+  fundingNotes    String?
+  tags            String[]          @default([])
+  field           String?
+  status          OpportunityStatus @default(PENDING)
+  origin          OpportunityOrigin
+  rejectionReason String?
+
+  source     Source? @relation(fields: [sourceId], references: [id])
+  sourceId   String?
+  externalId String?
+  // Hash of the normalized payload — lets ingestion skip unchanged records.
+  contentHash String?
+
+  submittedBy   User?   @relation("SubmittedOpportunities", fields: [submittedById], references: [id])
+  submittedById String?
+
+  savedBy SavedOpportunity[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sourceId, externalId])
+  @@index([status, deadline])
+  @@index([type])
+  @@index([country])
+  @@index([createdAt])
+}
+
+model Source {
+  id      String  @id @default(cuid())
+  key     String  @unique
+  name    String
+  url     String
+  enabled Boolean @default(true)
+
+  opportunities Opportunity[]
+  runs          IngestionRun[]
+
+  createdAt DateTime @default(now())
+}
+
+model IngestionRun {
+  id         String    @id @default(cuid())
+  source     Source    @relation(fields: [sourceId], references: [id])
+  sourceId   String
+  status     RunStatus @default(RUNNING)
+  added      Int       @default(0)
+  updated    Int       @default(0)
+  skipped    Int       @default(0)
+  failed     Int       @default(0)
+  error      String?
+  startedAt  DateTime  @default(now())
+  finishedAt DateTime?
+
+  @@index([sourceId, startedAt])
+}
+
+model User {
+  id              String   @id @default(cuid())
+  name            String?
+  email           String   @unique
+  emailVerified   DateTime?
+  image           String?
+  passwordHash    String?
+  role            UserRole @default(USER)
+  newsletterOptIn Boolean  @default(false)
+  digestTopics    String[] @default([])
+
+  accounts    Account[]
+  saved       SavedOpportunity[]
+  submissions Opportunity[]      @relation("SubmittedOpportunities")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Standard Auth.js account model (used for OAuth providers like Google).
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model SavedOpportunity {
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  opportunityId String
+  createdAt     DateTime    @default(now())
+
+  @@id([userId, opportunityId])
+}
+
+model NewsletterSubscriber {
+  id               String   @id @default(cuid())
+  email            String   @unique
+  topics           String[] @default([])
+  unsubscribeToken String   @unique @default(cuid())
+  createdAt        DateTime @default(now())
+}
