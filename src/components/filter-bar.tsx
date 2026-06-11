@@ -69,6 +69,7 @@ export function FilterBar({ countries }: { countries: string[] }) {
         <Select
           value={params.get("type") ?? ALL}
           onValueChange={(v) => setParam("type", v)}
+          items={{ [ALL]: "All types", ...typeLabels }}
         >
           <SelectTrigger className="w-[160px]" aria-label="Filter by type">
             <SelectValue placeholder="Type" />
@@ -86,6 +87,7 @@ export function FilterBar({ countries }: { countries: string[] }) {
         <Select
           value={params.get("funding") ?? ALL}
           onValueChange={(v) => setParam("funding", v)}
+          items={{ [ALL]: "Any funding", ...fundingLabels }}
         >
           <SelectTrigger className="w-[160px]" aria-label="Filter by funding">
             <SelectValue placeholder="Funding" />
@@ -103,6 +105,7 @@ export function FilterBar({ countries }: { countries: string[] }) {
         <Select
           value={params.get("location") ?? ALL}
           onValueChange={(v) => setParam("location", v)}
+          items={{ [ALL]: "Any format", online: "Online", inperson: "In person" }}
         >
           <SelectTrigger className="w-[140px]" aria-label="Filter by format">
             <SelectValue placeholder="Format" />
@@ -117,6 +120,10 @@ export function FilterBar({ countries }: { countries: string[] }) {
         <Select
           value={params.get("country") ?? ALL}
           onValueChange={(v) => setParam("country", v)}
+          items={{
+            [ALL]: "All countries",
+            ...Object.fromEntries(countries.map((c) => [c, c])),
+          }}
         >
           <SelectTrigger className="w-[170px]" aria-label="Filter by country">
             <SelectValue placeholder="Country" />
@@ -134,6 +141,7 @@ export function FilterBar({ countries }: { countries: string[] }) {
         <Select
           value={params.get("sort") ?? "deadline"}
           onValueChange={(v) => setParam("sort", v === "deadline" ? undefined : v)}
+          items={{ deadline: "Deadline soonest", newest: "Newest first" }}
         >
           <SelectTrigger className="w-[170px]" aria-label="Sort order">
             <SelectValue placeholder="Sort" />

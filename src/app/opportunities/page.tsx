@@ -3,8 +3,10 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { SearchX } from "lucide-react";
 import { db } from "@/lib/db";
+import { auth } from "@/lib/auth";
 import { FilterBar } from "@/components/filter-bar";
 import { OpportunityCard } from "@/components/opportunity-card";
+import { SaveButton } from "@/components/save-button";
 import { Button } from "@/components/ui/button";
 import {
   PAGE_SIZE,
@@ -26,6 +28,7 @@ export default async function OpportunitiesPage(props: {
   const sp = await props.searchParams;
   const filters = parseFilters(sp);
   const where = buildWhere(filters);
+  const session = await auth();
 
   const [items, totalCount, countryGroups] = await Promise.all([
     db.opportunity.findMany({
@@ -46,6 +49,17 @@ export default async function OpportunitiesPage(props: {
     .map((g) => g.country)
     .filter((c): c is string => Boolean(c));
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+
+  const savedIds = new Set(
+    session?.user
+      ? (
+          await db.savedOpportunity.findMany({
+            where: { userId: session.user.id },
+            select: { opportunityId: true },
+          })
+        ).map((s) => s.opportunityId)
+      : []
+  );
 
   function pageLink(page: number) {
     const next = new URLSearchParams();
@@ -103,6 +117,13 @@ export default async function OpportunitiesPage(props: {
                 funding: opp.funding,
                 field: opp.field,
               }}
+              saveSlot={
+                <SaveButton
+                  opportunityId={opp.id}
+                  initialSaved={savedIds.has(opp.id)}
+                  loggedIn={Boolean(session?.user)}
+                />
+              }
             />
           ))}
         </div>

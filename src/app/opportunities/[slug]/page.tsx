@@ -12,6 +12,8 @@ import {
   Tag,
 } from "lucide-react";
 import { db } from "@/lib/db";
+import { auth } from "@/lib/auth";
+import { SaveButton } from "@/components/save-button";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -51,6 +53,20 @@ export default async function OpportunityDetailPage(props: Props) {
     include: { source: true },
   });
   if (!opp || (opp.status !== "APPROVED" && opp.status !== "EXPIRED")) notFound();
+
+  const session = await auth();
+  const saved = session?.user
+    ? Boolean(
+        await db.savedOpportunity.findUnique({
+          where: {
+            userId_opportunityId: {
+              userId: session.user.id,
+              opportunityId: opp.id,
+            },
+          },
+        })
+      )
+    : false;
 
   const similar = await db.opportunity.findMany({
     where: {
@@ -113,6 +129,11 @@ export default async function OpportunityDetailPage(props: Props) {
             {typeLabels[opp.type]}
           </span>
           <DeadlineChip deadline={opp.deadline?.toISOString() ?? null} />
+          <SaveButton
+            opportunityId={opp.id}
+            initialSaved={saved}
+            loggedIn={Boolean(session?.user)}
+          />
           {opp.funding === "FULLY_FUNDED" && (
             <Badge className="bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
               Fully funded
