@@ -11,6 +11,7 @@ import { OpportunityCard } from "@/components/opportunity-card";
 import { SaveButton } from "@/components/save-button";
 import { formatDate, typeLabels } from "@/lib/format";
 import { NewsletterPrefs } from "@/components/newsletter-prefs";
+import { ProfileSettings } from "@/components/profile-settings";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
@@ -37,7 +38,13 @@ export default async function DashboardPage() {
     }),
     db.user.findUnique({
       where: { id: session.user.id },
-      select: { newsletterOptIn: true, name: true },
+      select: {
+        newsletterOptIn: true,
+        name: true,
+        email: true,
+        affiliation: true,
+        phone: true,
+      },
     }),
   ]);
 
@@ -72,7 +79,7 @@ export default async function DashboardPage() {
           <TabsTrigger value="submissions">
             <Inbox className="size-4" /> My submissions ({submissions.length})
           </TabsTrigger>
-          <TabsTrigger value="preferences">Preferences</TabsTrigger>
+          <TabsTrigger value="preferences">Profile &amp; settings</TabsTrigger>
         </TabsList>
 
         <TabsContent value="saved" className="mt-6">
@@ -145,7 +152,15 @@ export default async function DashboardPage() {
           )}
         </TabsContent>
 
-        <TabsContent value="preferences" className="mt-6">
+        <TabsContent value="preferences" className="mt-6 space-y-6">
+          <ProfileSettings
+            initial={{
+              name: user?.name ?? "",
+              affiliation: user?.affiliation ?? "",
+              phone: user?.phone ?? "",
+              email: user?.email ?? "",
+            }}
+          />
           <NewsletterPrefs initialOptIn={user?.newsletterOptIn ?? false} />
         </TabsContent>
       </Tabs>

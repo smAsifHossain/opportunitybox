@@ -22,7 +22,16 @@ export default function AboutPage() {
 
         <div className="mt-8 space-y-5 leading-relaxed text-foreground/85">
           <p>
-            OpenOpps started with a single near-miss. A student attended{" "}
+            OpenOpps started with a single near-miss.{" "}
+            <a
+              href="https://www.linkedin.com/in/smasifhossain/"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4"
+            >
+              Asif
+            </a>{" "}
+            attended{" "}
             <a
               href="https://nairrpilot.org/ai-unlocked"
               target="_blank"
@@ -32,9 +41,9 @@ export default function AboutPage() {
               AI Unlocked
             </a>
             , a workshop funded by NAIRR and NSF that fully reimbursed
-            participants — but only because a professor happened to mention it in
-            passing. No mailing list, no central directory, no way to find it.
-            One conversation was the difference between attending and never
+            participants — but only because his professor happened to mention it
+            in passing. No mailing list, no central directory, no way to find
+            it. One conversation was the difference between attending and never
             knowing it existed.
           </p>
           <p>
@@ -50,6 +59,29 @@ export default function AboutPage() {
             workshops, trainings, fellowships, grants, volunteer roles, and
             calls for papers from around the world — each with its deadline,
             funding details, and application link.
+          </p>
+          <p>
+            OpenOpps was developed by{" "}
+            <a
+              href="https://www.linkedin.com/in/smasifhossain/"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4"
+            >
+              S M Asif Hossain
+            </a>
+            , a PhD student in Computer Science at Wichita State University, in
+            collaboration with The Maroon Lab. If the project helps you,
+            consider{" "}
+            <a
+              href={site.repo}
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4"
+            >
+              giving it a star on GitHub
+            </a>{" "}
+            ⭐ — it helps more people discover these opportunities.
           </p>
         </div>
       </FadeIn>

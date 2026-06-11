@@ -19,7 +19,8 @@ export function Footer({ newsletterSlot }: { newsletterSlot?: React.ReactNode })
             rel="noreferrer"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            <GitHubIcon className="size-4" /> Open source on GitHub
+            <GitHubIcon className="size-4" /> Open source on GitHub — support us
+            with a ⭐
           </a>
         </div>
 
@@ -64,7 +65,16 @@ export function Footer({ newsletterSlot }: { newsletterSlot?: React.ReactNode })
         </div>
       </div>
       <div className="border-t border-border/60 py-4 text-center text-xs text-muted-foreground">
-        MIT licensed · Built by the community, for the community
+        MIT licensed · Created by{" "}
+        <a
+          href="https://www.linkedin.com/in/smasifhossain/"
+          target="_blank"
+          rel="noreferrer"
+          className="font-medium underline underline-offset-4 hover:text-foreground"
+        >
+          S M Asif Hossain
+        </a>{" "}
+        · Built by the community, for the community
       </div>
     </footer>
   );

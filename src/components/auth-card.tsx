@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { motion } from "motion/react";
-import { Compass, Loader2 } from "lucide-react";
+import { CheckCircle2, Compass, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -48,48 +48,94 @@ export function AuthCard({
           </p>
         </div>
 
-        <form action={formAction} className="space-y-4">
-          <input type="hidden" name="redirectTo" value={redirectTo} />
-          {mode === "register" && (
+        {state?.success ? (
+          <div className="flex flex-col items-center gap-3 py-4 text-center">
+            <CheckCircle2 className="size-9 text-emerald-500" />
+            <p className="text-sm text-muted-foreground">{state.success}</p>
+            <Button variant="outline" className="mt-2" render={<Link href="/login" />}>
+              Go to login
+            </Button>
+          </div>
+        ) : (
+          <form action={formAction} className="space-y-4">
+            <input type="hidden" name="redirectTo" value={redirectTo} />
+            {mode === "register" && (
+              <>
+                <div className="space-y-1.5">
+                  <Label htmlFor="name">Full name</Label>
+                  <Input id="name" name="name" placeholder="Ada Lovelace" required />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="affiliation">
+                    Affiliation{" "}
+                    <span className="font-normal text-muted-foreground">(optional)</span>
+                  </Label>
+                  <Input
+                    id="affiliation"
+                    name="affiliation"
+                    placeholder="e.g. Wichita State University"
+                  />
+                </div>
+              </>
+            )}
             <div className="space-y-1.5">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" placeholder="Ada Lovelace" required />
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="you@university.edu"
+                autoComplete="email"
+                required
+              />
             </div>
-          )}
-          <div className="space-y-1.5">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="you@university.edu"
-              autoComplete="email"
-              required
-            />
-          </div>
-          <div className="space-y-1.5">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              autoComplete={mode === "login" ? "current-password" : "new-password"}
-              minLength={mode === "register" ? 8 : undefined}
-              required
-            />
-          </div>
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">Password</Label>
+                {mode === "login" && (
+                  <Link
+                    href="/forgot-password"
+                    className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground"
+                  >
+                    Forgot password?
+                  </Link>
+                )}
+              </div>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete={mode === "login" ? "current-password" : "new-password"}
+                minLength={mode === "register" ? 8 : undefined}
+                required
+              />
+            </div>
+            {mode === "register" && (
+              <div className="space-y-1.5">
+                <Label htmlFor="confirmPassword">Confirm password</Label>
+                <Input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="new-password"
+                  minLength={8}
+                  required
+                />
+              </div>
+            )}
 
-          {state?.error && (
-            <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
-              {state.error}
-            </p>
-          )}
+            {state?.error && (
+              <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                {state.error}
+              </p>
+            )}
 
-          <Button type="submit" className="h-10 w-full" disabled={pending}>
-            {pending && <Loader2 className="size-4 animate-spin" />}
-            {mode === "login" ? "Log in" : "Create account"}
-          </Button>
-        </form>
+            <Button type="submit" className="h-10 w-full" disabled={pending}>
+              {pending && <Loader2 className="size-4 animate-spin" />}
+              {mode === "login" ? "Log in" : "Create account"}
+            </Button>
+          </form>
+        )}
 
         <p className="mt-5 text-center text-sm text-muted-foreground">
           {mode === "login" ? (

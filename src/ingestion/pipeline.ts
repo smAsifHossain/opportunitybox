@@ -3,15 +3,18 @@ import { confsTechAdapter } from "./adapters/confs-tech";
 import { ccfDeadlinesAdapter } from "./adapters/ccf-deadlines";
 import { aiDeadlinesAdapter } from "./adapters/ai-deadlines";
 import { grantsGovAdapter } from "./adapters/grants-gov";
+import { curatedAdapter } from "./adapters/curated";
 import { normalizedOpportunitySchema, type SourceAdapter } from "./types";
 import { contentHash } from "./util";
 import { opportunitySlug } from "../lib/slug";
+import { normalizeCountry } from "../lib/countries";
 
 export const adapters: SourceAdapter[] = [
   confsTechAdapter,
   ccfDeadlinesAdapter,
   aiDeadlinesAdapter,
   grantsGovAdapter,
+  curatedAdapter,
 ];
 
 export type RunSummary = {
@@ -66,6 +69,7 @@ async function runAdapter(
         continue;
       }
       const record = parsed.data;
+      record.country = normalizeCountry(record.country);
       const hash = contentHash(record);
 
       const existing = await db.opportunity.findUnique({

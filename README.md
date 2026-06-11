@@ -11,7 +11,7 @@ OpenOpps is an open-source directory of conferences, workshops, trainings, fello
 - 🔎 **Explore & filter** — full-text search plus filters for type, funding, online/in-person, country, and deadline-first sorting. Filter state lives in the URL, so every view is shareable.
 - ⏰ **Live deadline countdowns** — color-coded chips (red < 7 days, amber < 30, green otherwise); expired listings are archived automatically.
 - 🤖 **Automated ingestion** — adapters pull live data from [confs.tech](https://github.com/tech-conferences/conference-data), [ccf-deadlines](https://github.com/ccfddl/ccf-deadlines), [ai-deadlines](https://github.com/huggingface/ai-deadlines), and the [Grants.gov API](https://www.grants.gov/api) every 6 hours via GitHub Actions. One broken source never blocks the rest.
-- 👤 **Accounts** — email/password (and optional Google) login, bookmark opportunities, track your submissions.
+- 👤 **Accounts** — register with email verification, log in with email/password (optional Google), reset forgotten passwords by email, edit your profile (name, affiliation, contact), bookmark opportunities, track your submissions.
 - ✍️ **Community submissions** — anyone can submit an opportunity; moderators approve or reject (with a reason) before it goes live.
 - 🛡️ **Admin dashboard** — moderation queue, duplicate detection, per-source health (last run, add/update/fail counts), manual ingest trigger.
 - 📬 **Weekly newsletter** — new + closing-soon opportunities, tokenized unsubscribe; runs without any email provider in development (emails log to console).
@@ -46,6 +46,8 @@ npm run dev                 # http://localhost:3000
 ```
 
 The seed creates an admin account `admin@openopps.local` / `admin1234` (override with `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD`). **Change it in any real deployment.**
+
+> **Email flows in development:** registration requires email verification and password resets are emailed. Without a `RESEND_API_KEY`, those emails are printed to the dev-server console — copy the verification/reset link from the terminal.
 
 **Pull live data** from all four sources:
 

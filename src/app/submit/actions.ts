@@ -5,6 +5,7 @@ import { FundingLevel, OpportunityType } from "@prisma/client";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { opportunitySlug } from "@/lib/slug";
+import { normalizeCountry } from "@/lib/countries";
 
 const submitSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters").max(200),
@@ -96,7 +97,7 @@ export async function submitOpportunity(
       startDate: parseDateInput(data.startDate),
       endDate: parseDateInput(data.endDate),
       city: data.city,
-      country: data.country,
+      country: normalizeCountry(data.country),
       online: data.online,
       funding: data.funding,
       fundingNotes: data.fundingNotes,

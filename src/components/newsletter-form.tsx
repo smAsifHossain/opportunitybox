@@ -1,13 +1,25 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { CheckCircle2, Loader2, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { subscribeToNewsletter } from "@/app/newsletter/actions";
 
+const placeholders = ["you@university.edu", "you@gmail.com"];
+
 export function NewsletterForm() {
   const [state, formAction, pending] = useActionState(subscribeToNewsletter, undefined);
+
+  // Rotate the placeholder so it's clear any email works.
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  useEffect(() => {
+    const id = setInterval(
+      () => setPlaceholderIndex((i) => (i + 1) % placeholders.length),
+      1500
+    );
+    return () => clearInterval(id);
+  }, []);
 
   if (state?.ok) {
     return (
@@ -28,7 +40,7 @@ export function NewsletterForm() {
           type="email"
           name="email"
           required
-          placeholder="you@university.edu"
+          placeholder={placeholders[placeholderIndex]}
           aria-label="Email address"
           className="max-w-56"
         />

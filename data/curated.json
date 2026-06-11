@@ -1,0 +1,44 @@
+[
+  {
+    "id": "nairr-research-resources",
+    "title": "NAIRR Pilot — Research Resources Call",
+    "type": "GRANT",
+    "description": "The National AI Research Resource (NAIRR) Pilot provides US researchers with free access to national-scale computing, datasets, models, and software for AI research. The Research Resources call is open continuously; requests submitted by the 15th of a month are typically decided by the end of the following month. Awarded projects receive resources for twelve months.",
+    "homepageUrl": "https://nairrpilot.org/opportunities",
+    "applyUrl": "https://submit-nairr.xras.org",
+    "country": "United States",
+    "online": true,
+    "funding": "FULLY_FUNDED",
+    "fundingNotes": "Free national-scale compute, data, and model resources for awarded projects.",
+    "tags": ["NAIRR", "NSF", "AI", "research-computing", "rolling-deadline"],
+    "field": "Artificial Intelligence"
+  },
+  {
+    "id": "nairr-educational-resources",
+    "title": "NAIRR Pilot — Educational Resources Call",
+    "type": "TRAINING",
+    "description": "Through the NAIRR Pilot, educators and students can request computing resources and curated educational materials to support AI education and classroom use — including workshops and training events like AI Unlocked. The call is open on a rolling basis.",
+    "homepageUrl": "https://nairrpilot.org/opportunities",
+    "applyUrl": "https://submit-nairr.xras.org",
+    "country": "United States",
+    "online": true,
+    "funding": "FULLY_FUNDED",
+    "fundingNotes": "Compute and educational resources provided at no cost for accepted requests.",
+    "tags": ["NAIRR", "NSF", "AI", "education", "rolling-deadline"],
+    "field": "Artificial Intelligence"
+  },
+  {
+    "id": "nsf-reu-programs",
+    "title": "NSF Research Experiences for Undergraduates (REU)",
+    "type": "TRAINING",
+    "description": "NSF REU Sites host undergraduates for paid summer research across all STEM disciplines at universities throughout the United States. Students receive stipends and, in many cases, housing and travel allowances. Each site sets its own application deadline — most fall between January and March for summer programs.",
+    "homepageUrl": "https://www.nsf.gov/crssprgm/reu/",
+    "applyUrl": "https://www.nsf.gov/crssprgm/reu/reu_search.jsp",
+    "country": "United States",
+    "online": false,
+    "funding": "FULLY_FUNDED",
+    "fundingNotes": "Stipend plus (typically) housing and travel allowance.",
+    "tags": ["NSF", "undergraduate", "summer-research", "STEM"],
+    "field": "All STEM Fields"
+  }
+]
