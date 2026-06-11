@@ -1,8 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { CalendarClock } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const noopSubscribe = () => () => {};
+/** False during SSR/hydration, true after mount — without effect-driven state. */
+function useMounted(): boolean {
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false
+  );
+}
 
 function describe(deadline: string): { label: string; tone: "red" | "amber" | "green" | "gray" } {
   const days = Math.ceil((new Date(deadline).getTime() - Date.now()) / 86_400_000);
@@ -30,10 +40,8 @@ export function DeadlineChip({
 }) {
   // Compute after mount: "days left" depends on the viewer's clock, so
   // rendering it on the server would risk hydration mismatches.
-  const [state, setState] = useState<ReturnType<typeof describe> | null>(null);
-  useEffect(() => {
-    if (deadline) setState(describe(deadline));
-  }, [deadline]);
+  const mounted = useMounted();
+  const state = mounted && deadline ? describe(deadline) : null;
 
   if (!deadline) {
     return (

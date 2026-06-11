@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { useCallback, useRef, useState, useTransition } from "react";
 import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ export function FilterBar({ countries }: { countries: string[] }) {
   const [, startTransition] = useTransition();
 
   const setParam = useCallback(
-    (key: string, value: string | undefined) => {
+    (key: string, value: string | null | undefined) => {
       const next = new URLSearchParams(params.toString());
       if (value && value !== ALL) next.set(key, value);
       else next.delete(key);
@@ -34,13 +34,16 @@ export function FilterBar({ countries }: { countries: string[] }) {
     [params, router]
   );
 
-  // Debounced free-text search.
-  const [q, setQ] = useState(params.get("q") ?? "");
+  // Debounced free-text search. When the URL's q changes from elsewhere
+  // (Clear button, back navigation), re-sync the input during render.
+  const urlQ = params.get("q") ?? "";
+  const [q, setQ] = useState(urlQ);
+  const [prevUrlQ, setPrevUrlQ] = useState(urlQ);
+  if (urlQ !== prevUrlQ) {
+    setPrevUrlQ(urlQ);
+    setQ(urlQ);
+  }
   const debounce = useRef<ReturnType<typeof setTimeout> | null>(null);
-  useEffect(() => {
-    setQ(params.get("q") ?? "");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.get("q")]);
 
   function onSearch(value: string) {
     setQ(value);
