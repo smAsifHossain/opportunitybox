@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { AuthNav } from "@/components/auth-nav";
 import { Footer } from "@/components/footer";
+import { NewsletterForm } from "@/components/newsletter-form";
 import { Toaster } from "@/components/ui/sonner";
 import { site } from "@/lib/site";
 
@@ -48,7 +49,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Navbar authSlot={<AuthNav />} />
           <main className="flex-1">{children}</main>
-          <Footer />
+          <Footer newsletterSlot={<NewsletterForm />} />
           <Toaster richColors position="bottom-right" />
         </ThemeProvider>
       </body>

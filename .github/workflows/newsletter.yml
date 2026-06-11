@@ -1,0 +1,20 @@
+name: Weekly newsletter digest
+
+on:
+  schedule:
+    # Mondays 13:00 UTC
+    - cron: "0 13 * * 1"
+  workflow_dispatch: {}
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+    # Requires repo secrets:
+    #   APP_URL     — deployed base URL, e.g. https://openopps.vercel.app
+    #   CRON_SECRET — same value as the CRON_SECRET env var on the server
+    steps:
+      - name: Trigger digest endpoint
+        run: |
+          curl --fail-with-body -X POST \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "${{ secrets.APP_URL }}/api/newsletter/digest"
