@@ -174,13 +174,13 @@ export default async function HomePage() {
       <section className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 sm:py-24">
         <FadeIn>
           <h2 className="text-balance text-2xl font-bold tracking-tight sm:text-3xl">
-            Built because one email almost didn&apos;t arrive
+            One conversation shouldn&apos;t decide your future
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-balance text-muted-foreground">
-            OpenOpps exists because a fully funded workshop was discovered only
-            through a professor&apos;s passing mention. Great opportunities
-            shouldn&apos;t depend on who you happen to know — they should be open
-            to everyone.
+            A fully funded workshop, found only because a professor mentioned it
+            in passing. How many others slipped by unheard? OpenOpps brings every
+            opportunity into one open, searchable place — so the ones that change
+            your path reach you, not just the well-connected few.
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
             <Button size="lg" render={<Link href="/about" />}>
