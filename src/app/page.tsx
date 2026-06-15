@@ -18,6 +18,7 @@ import { FadeIn, Stagger, StaggerItem } from "@/components/animated";
 import { OpportunityCard } from "@/components/opportunity-card";
 import { Button } from "@/components/ui/button";
 import { typeLabels } from "@/lib/format";
+import { activeDeadlineFilter } from "@/lib/opportunity-query";
 import type { OpportunityType } from "@prisma/client";
 
 export const revalidate = 300;
@@ -37,19 +38,21 @@ const categoryIcons: Partial<Record<OpportunityType, React.ReactNode>> = {
 export default async function HomePage() {
   const now = new Date();
   const in30days = new Date(now.getTime() + 30 * 86_400_000);
+  // Shared rule: count only opportunities that haven't passed their deadline.
+  const active = activeDeadlineFilter();
 
   const [total, closingSoonCount, fundedCount, countryGroups, closingSoon, byType] =
     await Promise.all([
-      db.opportunity.count({ where: { status: "APPROVED" } }),
+      db.opportunity.count({ where: { status: "APPROVED", AND: [active] } }),
       db.opportunity.count({
         where: { status: "APPROVED", deadline: { gte: now, lte: in30days } },
       }),
       db.opportunity.count({
-        where: { status: "APPROVED", funding: "FULLY_FUNDED" },
+        where: { status: "APPROVED", funding: "FULLY_FUNDED", AND: [active] },
       }),
       db.opportunity.groupBy({
         by: ["country"],
-        where: { status: "APPROVED", country: { not: null } },
+        where: { status: "APPROVED", country: { not: null }, AND: [active] },
       }),
       db.opportunity.findMany({
         where: { status: "APPROVED", deadline: { gte: now } },
@@ -58,7 +61,7 @@ export default async function HomePage() {
       }),
       db.opportunity.groupBy({
         by: ["type"],
-        where: { status: "APPROVED" },
+        where: { status: "APPROVED", AND: [active] },
         _count: true,
       }),
     ]);

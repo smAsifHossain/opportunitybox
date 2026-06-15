@@ -10,6 +10,7 @@ import { SaveButton } from "@/components/save-button";
 import { Button } from "@/components/ui/button";
 import {
   PAGE_SIZE,
+  activeDeadlineFilter,
   buildOrderBy,
   buildWhere,
   parseFilters,
@@ -40,7 +41,11 @@ export default async function OpportunitiesPage(props: {
     db.opportunity.count({ where }),
     db.opportunity.groupBy({
       by: ["country"],
-      where: { status: "APPROVED", country: { not: null } },
+      where: {
+        status: "APPROVED",
+        country: { not: null },
+        AND: [activeDeadlineFilter()],
+      },
       orderBy: { country: "asc" },
     }),
   ]);
@@ -119,6 +124,7 @@ export default async function OpportunitiesPage(props: {
               }}
               saveSlot={
                 <SaveButton
+                  key={opp.id}
                   opportunityId={opp.id}
                   initialSaved={savedIds.has(opp.id)}
                   loggedIn={Boolean(session?.user)}

@@ -39,17 +39,35 @@ export function parseFilters(sp: SearchParams): ParsedFilters {
   };
 }
 
+/**
+ * Filter that hides opportunities whose deadline has already passed, while
+ * keeping rolling/open ones (no deadline). The cutoff is the start of today,
+ * so something due later today still counts as open.
+ */
+export function activeDeadlineFilter(): Prisma.OpportunityWhereInput {
+  const cutoff = new Date();
+  cutoff.setHours(0, 0, 0, 0);
+  return { OR: [{ deadline: null }, { deadline: { gte: cutoff } }] };
+}
+
 export function buildWhere(f: ParsedFilters): Prisma.OpportunityWhereInput {
-  const where: Prisma.OpportunityWhereInput = { status: "APPROVED" };
+  // The deadline filter and the optional search both need their own OR, so
+  // they're combined under AND to avoid clobbering each other.
+  const and: Prisma.OpportunityWhereInput[] = [activeDeadlineFilter()];
 
   if (f.q) {
-    where.OR = [
-      { title: { contains: f.q, mode: "insensitive" } },
-      { description: { contains: f.q, mode: "insensitive" } },
-      { field: { contains: f.q, mode: "insensitive" } },
-      { country: { contains: f.q, mode: "insensitive" } },
-    ];
+    and.push({
+      OR: [
+        { title: { contains: f.q, mode: "insensitive" } },
+        { description: { contains: f.q, mode: "insensitive" } },
+        { field: { contains: f.q, mode: "insensitive" } },
+        { country: { contains: f.q, mode: "insensitive" } },
+      ],
+    });
   }
+
+  const where: Prisma.OpportunityWhereInput = { status: "APPROVED", AND: and };
+
   if (f.type) where.type = f.type;
   if (f.funding) where.funding = f.funding;
   if (f.location === "online") where.online = true;
