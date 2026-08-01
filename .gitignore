@@ -37,6 +37,11 @@ yarn-error.log*
 # local embedded postgres data
 /.local/
 
+# local AI/editor assistant config
+/.claude/
+AGENTS.md
+CLAUDE.md
+
 # vercel
 .vercel
 

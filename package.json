@@ -2,16 +2,27 @@
   "name": "opportunitybox",
   "version": "0.1.0",
   "private": true,
+  "description": "An open directory of conferences, workshops, fellowships, grants and calls for papers worldwide, with deadlines and funding details.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smAsifHossain/opportunitybox.git"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "db:start": "tsx scripts/dev-db.ts",
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
-    "ingest": "tsx scripts/ingest.ts"
+    "ingest": "tsx scripts/ingest.ts",
+    "normalize:countries": "tsx scripts/normalize-countries.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.2",

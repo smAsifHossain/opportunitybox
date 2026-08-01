@@ -1,5 +1,9 @@
 # 🧭 OpportunityBox
 
+[![CI](https://github.com/smAsifHossain/opportunitybox/actions/workflows/ci.yml/badge.svg)](https://github.com/smAsifHossain/opportunitybox/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 **Never miss an opportunity again.**
 
 OpportunityBox is a free, open-source directory of **conferences, workshops, trainings, fellowships, grants, hackathons, volunteer roles, and calls for papers** (for both conferences and journals) from around the world — each with its **deadline**, **funding status** (fully funded / partial / none), **application link**, and homepage, all in one searchable place.
@@ -80,8 +84,9 @@ The seed creates an admin account — `admin@opportunitybox.local` / `admin1234`
 | `npm run db:migrate` | Apply database migrations |
 | `npm run db:seed` | Seed sample data + admin user |
 | `npm run ingest` | Run all source adapters once |
+| `npm run normalize:countries` | Re-apply country name normalization to existing rows |
 | `npm test` | Unit tests (Vitest) |
-| `npm run lint` / `npm run build` | Lint / production build |
+| `npm run lint` / `npm run typecheck` / `npm run build` | Lint / type check / production build |
 
 ---
 
@@ -120,14 +125,19 @@ The whole stack runs on free tiers, stays **online 24/7**, and handles login and
 ## 🧩 Architecture
 
 ```
-src/
-├─ app/                  # routes: home, opportunities, auth, dashboard, submit, admin, api
-├─ components/           # UI building blocks (+ ui/ for shadcn primitives)
-├─ ingestion/
-│  ├─ types.ts           # NormalizedOpportunity schema + SourceAdapter interface
-│  ├─ adapters/          # confs-tech, ccf-deadlines, ai-deadlines, grants-gov, curated
-│  └─ pipeline.ts        # validate → dedupe → upsert → log each run
-└─ lib/                  # db, auth, email, digest, country normalization, query builders
+├─ src/
+│  ├─ app/               # routes: home, opportunities, auth, dashboard, submit, admin, api
+│  ├─ components/        # UI building blocks (ui/ = shadcn primitives, admin/ = admin widgets)
+│  ├─ ingestion/
+│  │  ├─ types.ts        # NormalizedOpportunity schema + SourceAdapter interface
+│  │  ├─ adapters/       # confs-tech, ccf-deadlines, ai-deadlines, grants-gov, curated
+│  │  └─ pipeline.ts     # validate → dedupe → upsert → log each run
+│  └─ lib/               # db, auth, email, digest, country normalization, query builders
+├─ prisma/               # schema, migrations, seed data
+├─ scripts/              # dev database, ingestion runner, data maintenance
+├─ data/curated.json     # hand-curated opportunities (sources without an API)
+├─ docs/                 # data source documentation
+└─ .github/workflows/    # CI, 6-hourly ingestion, weekly newsletter
 ```
 
 Ingested records from trusted structured sources go live immediately; community submissions wait in the moderation queue. Every ingestion run is logged per source and surfaced on the admin dashboard.
