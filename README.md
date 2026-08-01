@@ -39,8 +39,8 @@ Next.js 16 (App Router, React Server Components) · TypeScript · Tailwind CSS v
 ### Steps
 
 ```bash
-git clone https://github.com/smAsifHossain/openopps.git
-cd openopps
+git clone https://github.com/smAsifHossain/opportunitybox.git
+cd opportunitybox
 npm install
 cp .env.example .env        # then generate a secret: npx auth secret  → paste into AUTH_SECRET
 ```

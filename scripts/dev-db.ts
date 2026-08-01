@@ -1,4 +1,4 @@
-/**
+?/**
  * Runs a local PostgreSQL without Docker (binaries are downloaded by the
  * embedded-postgres package). Data persists in .local/pgdata.
  *
@@ -7,7 +7,7 @@
  */
 import EmbeddedPostgres from "embedded-postgres";
 
-const DB_NAME = "openopps";
+const DB_NAME = "opportunitybox";
 
 async function main() {
   const pg = new EmbeddedPostgres({

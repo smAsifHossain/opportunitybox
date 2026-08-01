@@ -32,7 +32,7 @@ type CuratedRecord = {
 export const curatedAdapter: SourceAdapter = {
   key: "curated",
   name: "Curated by contributors",
-  url: "https://github.com/smAsifHossain/openopps/blob/main/data/curated.json",
+  url: "https://github.com/smAsifHossain/opportunitybox/blob/main/data/curated.json",
 
   async fetch(): Promise<NormalizedOpportunity[]> {
     return (curated as CuratedRecord[])
