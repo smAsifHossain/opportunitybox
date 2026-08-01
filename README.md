@@ -1,10 +1,10 @@
-# 🧭 OpenOpps
+# 🧭 OpportunityBox
 
 **Never miss an opportunity again.**
 
-OpenOpps is a free, open-source directory of **conferences, workshops, trainings, fellowships, grants, hackathons, volunteer roles, and calls for papers** (for both conferences and journals) from around the world — each with its **deadline**, **funding status** (fully funded / partial / none), **application link**, and homepage, all in one searchable place.
+OpportunityBox is a free, open-source directory of **conferences, workshops, trainings, fellowships, grants, hackathons, volunteer roles, and calls for papers** (for both conferences and journals) from around the world — each with its **deadline**, **funding status** (fully funded / partial / none), **application link**, and homepage, all in one searchable place.
 
-> **Why it exists:** A fully funded NSF/NAIRR workshop ([AI Unlocked](https://nairrpilot.org/ai-unlocked)) was discovered only because a professor mentioned it in passing. Great opportunities shouldn't depend on who you happen to know — they should reach everyone. OpenOpps was built to close that gap.
+> **Why it exists:** A fully funded NSF/NAIRR workshop ([AI Unlocked](https://nairrpilot.org/ai-unlocked)) was discovered only because a professor mentioned it in passing. Great opportunities shouldn't depend on who you happen to know — they should reach everyone. OpportunityBox was built to close that gap.
 
 Created by [S M Asif Hossain](https://www.linkedin.com/in/smasifhossain/), a PhD student in Computer Science at Wichita State University, in collaboration with The Maroon Lab.
 
@@ -65,7 +65,7 @@ Optionally pull **live data** from all sources:
 npm run ingest
 ```
 
-The seed creates an admin account — `admin@openopps.local` / `admin1234` (override with `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` in `.env`). **Change this in any real deployment.**
+The seed creates an admin account — `admin@opportunitybox.local` / `admin1234` (override with `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` in `.env`). **Change this in any real deployment.**
 
 > **📧 Emails in local development:** registration requires email verification and password resets are emailed. Without a `RESEND_API_KEY`, those emails are **printed to the `npm run dev` terminal** — copy the verification / reset link from there into your browser. (The seeded admin is already verified, so you can log in with it directly.)
 
@@ -101,7 +101,7 @@ The whole stack runs on free tiers, stays **online 24/7**, and handles login and
    | `DATABASE_URL` | your Neon connection string |
    | `AUTH_SECRET` | output of `npx auth secret` |
    | `CRON_SECRET` | any long random string |
-   | `NEXT_PUBLIC_APP_URL` | your deployment URL, e.g. `https://openopps.vercel.app` |
+   | `NEXT_PUBLIC_APP_URL` | your deployment URL, e.g. `https://opportunitybox.vercel.app` |
    | `RESEND_API_KEY`, `EMAIL_FROM` | *(optional)* real emails via [resend.com](https://resend.com) |
    | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | *(optional)* Google login |
 4. Click **Deploy** — live in ~2 minutes.

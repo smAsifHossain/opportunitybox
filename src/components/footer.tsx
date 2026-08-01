@@ -8,7 +8,7 @@ export function Footer({ newsletterSlot }: { newsletterSlot?: React.ReactNode })
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div className="space-y-3">
           <p className="text-lg font-semibold tracking-tight">
-            Open<span className="text-gradient">Opps</span>
+            Opportunity<span className="text-gradient">Box</span>
           </p>
           <p className="max-w-xs text-sm text-muted-foreground">
             {site.description}

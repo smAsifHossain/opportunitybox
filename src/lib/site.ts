@@ -1,5 +1,5 @@
 export const site = {
-  name: "OpenOpps",
+  name: "OpportunityBox",
   tagline: "Never miss an opportunity again",
   description:
     "An open-source directory of conferences, workshops, trainings, fellowships, volunteer positions, and calls for papers from around the world — with deadlines, funding info, and application links in one place.",

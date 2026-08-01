@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Why OpenOpps exists: making global opportunities discoverable for everyone, not just the well-connected.",
+    "Why OpportunityBox exists: making global opportunities discoverable for everyone, not just the well-connected.",
 };
 
 export default function AboutPage() {
@@ -22,7 +22,7 @@ export default function AboutPage() {
 
         <div className="mt-8 space-y-5 leading-relaxed text-foreground/85">
           <p>
-            OpenOpps started with a single near-miss.{" "}
+            OpportunityBox started with a single near-miss.{" "}
             <a
               href="https://www.linkedin.com/in/smasifhossain/"
               target="_blank"
@@ -55,13 +55,13 @@ export default function AboutPage() {
             already-connected.
           </p>
           <p>
-            OpenOpps is the fix: one open-source, free directory of conferences,
+            OpportunityBox is the fix: one open-source, free directory of conferences,
             workshops, trainings, fellowships, grants, volunteer roles, and
             calls for papers from around the world — each with its deadline,
             funding details, and application link.
           </p>
           <p>
-            OpenOpps was developed by{" "}
+            OpportunityBox was developed by{" "}
             <a
               href="https://www.linkedin.com/in/smasifhossain/"
               target="_blank"

@@ -46,14 +46,14 @@ export function isUpcoming(date: Date | undefined, graceDays = 0): boolean {
 export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
   const res = await fetch(url, {
     ...init,
-    headers: { "User-Agent": "openopps-ingest", ...init?.headers },
+    headers: { "User-Agent": "opportunitybox-ingest", ...init?.headers },
   });
   if (!res.ok) throw new Error(`GET ${url} -> ${res.status}`);
   return (await res.json()) as T;
 }
 
 export async function fetchText(url: string): Promise<string> {
-  const res = await fetch(url, { headers: { "User-Agent": "openopps-ingest" } });
+  const res = await fetch(url, { headers: { "User-Agent": "opportunitybox-ingest" } });
   if (!res.ok) throw new Error(`GET ${url} -> ${res.status}`);
   return await res.text();
 }

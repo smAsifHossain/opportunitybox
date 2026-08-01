@@ -25,7 +25,7 @@ export function Navbar({ authSlot }: { authSlot?: React.ReactNode }) {
             <Compass className="size-4.5" />
           </span>
           <span className="text-lg tracking-tight">
-            Open<span className="text-gradient">Opps</span>
+            Opportunity<span className="text-gradient">Box</span>
           </span>
         </Link>
 

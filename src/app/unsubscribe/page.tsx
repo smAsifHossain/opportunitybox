@@ -31,7 +31,7 @@ export default async function UnsubscribePage(props: {
           : "This unsubscribe link is invalid or was already used. If you have an account, you can also manage email preferences from your dashboard."}
       </p>
       <Button className="mt-6" render={<Link href="/" />}>
-        Back to OpenOpps
+        Back to OpportunityBox
       </Button>
     </div>
   );

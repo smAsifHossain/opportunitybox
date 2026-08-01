@@ -6,7 +6,7 @@ import { Resend } from "resend";
  */
 export const emailEnabled = Boolean(process.env.RESEND_API_KEY);
 
-const from = process.env.EMAIL_FROM ?? "OpenOpps <onboarding@resend.dev>";
+const from = process.env.EMAIL_FROM ?? "OpportunityBox <onboarding@resend.dev>";
 
 let resend: Resend | null = null;
 function client(): Resend {

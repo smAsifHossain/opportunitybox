@@ -469,14 +469,14 @@ const opportunities: SeedOpportunity[] = [
 
 async function main() {
   // Dev admin account so the moderation dashboard is usable immediately.
-  const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "admin@openopps.local";
+  const adminEmail = process.env.SEED_ADMIN_EMAIL ?? "admin@opportunitybox.local";
   const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "admin1234";
   await db.user.upsert({
     where: { email: adminEmail },
     update: { role: "ADMIN" },
     create: {
       email: adminEmail,
-      name: "OpenOpps Admin",
+      name: "OpportunityBox Admin",
       role: "ADMIN",
       passwordHash: await bcrypt.hash(adminPassword, 10),
     },

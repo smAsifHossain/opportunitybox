@@ -1,4 +1,4 @@
-# Contributing to OpenOpps
+# Contributing to OpportunityBox
 
 Thanks for helping make opportunities discoverable for everyone! Contributions of all kinds are welcome — new data sources, bug fixes, UI polish, docs, and opportunity submissions through the app itself.
 

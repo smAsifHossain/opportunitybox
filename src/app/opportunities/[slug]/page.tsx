@@ -209,7 +209,7 @@ export default async function OpportunityDetailPage(props: Props) {
             ? `Sourced automatically from ${opp.source.name}.`
             : opp.origin === "COMMUNITY"
               ? "Submitted by the community and approved by moderators."
-              : "Curated by the OpenOpps team."}{" "}
+              : "Curated by the OpportunityBox team."}{" "}
           Always verify details on the official site before applying.
         </p>
       </FadeIn>
