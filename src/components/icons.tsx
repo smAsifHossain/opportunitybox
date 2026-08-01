@@ -1,3 +1,64 @@
+import { cn } from "@/lib/utils";
+
+/**
+ * The OpportunityBox mark: an open box with a spark rising out of it.
+ * Stroked box + filled spark keeps it legible down to ~16px.
+ */
+export function LogoMark({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden className={className}>
+      <path
+        d="M12 1.8c.5 2.6 1.15 3.25 3.75 3.75-2.6.5-3.25 1.15-3.75 3.75-.5-2.6-1.15-3.25-3.75-3.75 2.6-.5 3.25-1.15 3.75-3.75Z"
+        fill="currentColor"
+      />
+      <path
+        d="M3.6 11.4h16.8"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M4.9 11.4v6.3a2.6 2.6 0 0 0 2.6 2.6h9a2.6 2.6 0 0 0 2.6-2.6v-6.3"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+/** The mark on its brand-gradient tile. */
+export function LogoTile({
+  className,
+  markClassName,
+}: {
+  className?: string;
+  markClassName?: string;
+}) {
+  return (
+    <span
+      className={cn(
+        "grid place-items-center rounded-xl bg-gradient-to-br from-violet-500 via-fuchsia-500 to-cyan-400 text-white shadow-lg shadow-violet-500/25 ring-1 ring-white/15",
+        className
+      )}
+    >
+      <LogoMark className={markClassName} />
+    </span>
+  );
+}
+
+/** Full lockup: tile + wordmark. */
+export function LogoLockup({ className }: { className?: string }) {
+  return (
+    <span className={cn("flex items-center gap-2.5", className)}>
+      <LogoTile className="size-9" markClassName="size-5" />
+      <span className="text-lg font-semibold tracking-tight">
+        Opportunity<span className="text-gradient">Box</span>
+      </span>
+    </span>
+  );
+}
+
 /** Brand icons that lucide no longer ships. */
 export function GitHubIcon({ className }: { className?: string }) {
   return (

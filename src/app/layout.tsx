@@ -45,7 +45,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       style={{ ["--font-sans" as string]: "var(--font-geist-sans)" }}
     >
-      <body className="flex min-h-full flex-col">
+      {/* Browser extensions (Grammarly, password managers) inject attributes
+          here before React hydrates, which would otherwise warn. */}
+      <body suppressHydrationWarning className="flex min-h-full flex-col">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <Navbar authSlot={<AuthNav />} />
           <main className="flex-1">{children}</main>

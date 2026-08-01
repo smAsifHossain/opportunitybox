@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { motion } from "motion/react";
-import { CheckCircle2, Compass, Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
+import { LogoTile } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,9 +36,7 @@ export function AuthCard({
         className="w-full max-w-sm rounded-2xl border border-border/70 bg-card/80 p-8 shadow-xl shadow-violet-500/5 backdrop-blur"
       >
         <div className="mb-6 flex flex-col items-center text-center">
-          <span className="grid size-11 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 text-white shadow-lg shadow-violet-500/25">
-            <Compass className="size-5.5" />
-          </span>
+          <LogoTile className="size-12" markClassName="size-6.5" />
           <h1 className="mt-4 text-xl font-bold tracking-tight">
             {mode === "login" ? "Welcome back" : "Create your account"}
           </h1>

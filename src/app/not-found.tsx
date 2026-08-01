@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { Compass } from "lucide-react";
+import { LogoMark } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
     <div className="mx-auto flex max-w-md flex-col items-center px-4 py-24 text-center">
-      <Compass className="size-10 text-muted-foreground" />
+      <LogoMark className="size-11 text-muted-foreground" />
       <h1 className="mt-4 text-3xl font-bold tracking-tight">
         Page not <span className="text-gradient">found</span>
       </h1>

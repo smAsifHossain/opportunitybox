@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GitHubIcon } from "@/components/icons";
+import { GitHubIcon, LogoTile } from "@/components/icons";
 import { site } from "@/lib/site";
 
 export function Footer({ newsletterSlot }: { newsletterSlot?: React.ReactNode }) {
@@ -7,8 +7,11 @@ export function Footer({ newsletterSlot }: { newsletterSlot?: React.ReactNode })
     <footer className="border-t border-border/60 bg-muted/30">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3">
         <div className="space-y-3">
-          <p className="text-lg font-semibold tracking-tight">
-            Opportunity<span className="text-gradient">Box</span>
+          <p className="flex items-center gap-2.5 text-lg font-semibold tracking-tight">
+            <LogoTile className="size-8" markClassName="size-4.5" />
+            <span>
+              Opportunity<span className="text-gradient">Box</span>
+            </span>
           </p>
           <p className="max-w-xs text-sm text-muted-foreground">
             {site.description}
