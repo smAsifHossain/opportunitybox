@@ -1,4 +1,4 @@
-?/**
+/**
  * Runs a local PostgreSQL without Docker (binaries are downloaded by the
  * embedded-postgres package). Data persists in .local/pgdata.
  *
