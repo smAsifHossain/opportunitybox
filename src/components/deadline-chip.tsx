@@ -5,7 +5,7 @@ import { CalendarClock } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const noopSubscribe = () => () => {};
-/** False during SSR/hydration, true after mount — without effect-driven state. */
+/** False during SSR/hydration, true after mount, without effect-driven state. */
 function useMounted(): boolean {
   return useSyncExternalStore(
     noopSubscribe,

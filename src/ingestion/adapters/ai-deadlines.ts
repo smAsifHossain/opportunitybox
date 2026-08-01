@@ -63,7 +63,7 @@ export const aiDeadlinesAdapter: SourceAdapter = {
         const name = entry.full_name ?? entry.title;
         out.push({
           externalId: entry.id,
-          title: `${entry.title} ${entry.year} — Call for Papers`,
+          title: `${entry.title} ${entry.year}, Call for Papers`,
           description: [
             `${name} (${entry.title} ${entry.year}) is accepting paper submissions.`,
             entry.date ? ` The conference runs ${entry.date}` : "",

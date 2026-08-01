@@ -36,7 +36,7 @@ export default async function VerifyPage(props: {
       </h1>
       <p className="mt-2 text-sm text-muted-foreground">
         {verified
-          ? "Your account is active — log in and start saving opportunities."
+          ? "Your account is active. Log in and start saving opportunities."
           : "This verification link is invalid or has expired. Log in with your credentials to receive a fresh link."}
       </p>
       <Button className="mt-6" render={<Link href="/login" />}>

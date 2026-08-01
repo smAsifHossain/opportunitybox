@@ -14,7 +14,7 @@ export async function subscribeToNewsletter(
   );
   if (!parsed.success) return { error: "Please enter a valid email address." };
 
-  // Upsert keeps this idempotent — resubscribing is a silent success.
+  // Upsert keeps this idempotent, so resubscribing is a silent success.
   await db.newsletterSubscriber.upsert({
     where: { email: parsed.data },
     update: {},

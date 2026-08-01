@@ -24,7 +24,7 @@ export function NewsletterForm() {
   if (state?.ok) {
     return (
       <p className="flex items-center gap-2 text-sm text-emerald-600 dark:text-emerald-400">
-        <CheckCircle2 className="size-4" /> You&apos;re on the list — first
+        <CheckCircle2 className="size-4" /> You&apos;re on the list. First
         digest arrives next week.
       </p>
     );

@@ -2,7 +2,7 @@
  * Runs a local PostgreSQL without Docker (binaries are downloaded by the
  * embedded-postgres package). Data persists in .local/pgdata.
  *
- * Usage: npm run db:start  — keep the terminal open while developing.
+ * Usage: npm run db:start (keep the terminal open while developing).
  * Matches the default DATABASE_URL in .env.example.
  */
 import EmbeddedPostgres from "embedded-postgres";
@@ -16,7 +16,7 @@ async function main() {
     password: "postgres",
     port: 5432,
     persistent: true,
-    // UTF8 regardless of OS locale — source data contains non-Latin text.
+    // UTF8 regardless of OS locale, since source data contains non-Latin text.
     initdbFlags: ["--encoding=UTF8", "--locale=C"],
   });
 

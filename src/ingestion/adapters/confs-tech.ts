@@ -62,7 +62,7 @@ export const confsTechAdapter: SourceAdapter = {
           }
         }
       } catch {
-        // Next year's directory may not exist yet — that's fine.
+        // Next year's directory may not exist yet, which is fine.
       }
     }
 
@@ -111,7 +111,7 @@ export const confsTechAdapter: SourceAdapter = {
                 : "",
             ".",
             openCfp
-              ? ` The call for proposals is open until ${cfpEnd!.toDateString()} — speakers are welcome to submit.`
+              ? ` The call for proposals is open until ${cfpEnd!.toDateString()}, and speakers are welcome to submit.`
               : "",
             " Listed via the community-maintained confs.tech dataset.",
           ].join(""),

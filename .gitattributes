@@ -2,7 +2,7 @@
 # so Windows/macOS/Linux contributors produce identical diffs.
 * text=auto eol=lf
 
-# Binary files — never convert
+# Binary files, never convert
 *.png binary
 *.jpg binary
 *.jpeg binary

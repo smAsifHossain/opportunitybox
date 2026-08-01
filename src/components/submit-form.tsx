@@ -58,7 +58,7 @@ export function SubmitForm() {
         ))}
       </div>
 
-      {/* Both step panels stay mounted at all times — remounting would wipe
+      {/* Both step panels stay mounted at all times, because remounting would wipe
           the uncontrolled inputs' values before submit. Visibility is a class
           toggle; tw-animate-css classes replay the entrance animation. */}
       <div className="rounded-2xl border border-border/70 bg-card/70 p-6 backdrop-blur sm:p-8">

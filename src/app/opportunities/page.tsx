@@ -97,7 +97,7 @@ export default async function OpportunitiesPage(props: {
           <SearchX className="size-10 text-muted-foreground/60" />
           <p className="font-medium">No opportunities match those filters</p>
           <p className="max-w-sm text-sm text-muted-foreground">
-            Try removing a filter or broadening your search — or be the first to{" "}
+            Try removing a filter or broadening your search, or be the first to{" "}
             <Link href="/submit" className="underline underline-offset-4">
               submit one
             </Link>

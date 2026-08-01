@@ -23,7 +23,7 @@ type CuratedRecord = {
 };
 
 /**
- * Community-curated opportunities maintained in data/curated.json — the
+ * Community-curated opportunities maintained in data/curated.json, the
  * channel for sources that have no API or feed (e.g. nairrpilot.org program
  * calls, university workshop pages). Add an entry via pull request; it ships
  * with the next ingestion run. Records whose deadline has passed are dropped

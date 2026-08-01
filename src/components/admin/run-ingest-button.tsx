@@ -22,7 +22,7 @@ export function RunIngestButton() {
       toast.success(
         `Ingestion finished: ${added} added, ${updated} updated, ${result.expired} expired` +
           (failedSources.length
-            ? ` — ${failedSources.length} source(s) failed`
+            ? `, ${failedSources.length} source(s) failed`
             : "")
       );
     });

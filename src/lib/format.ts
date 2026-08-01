@@ -35,7 +35,7 @@ export const typeBadgeClasses: Record<OpportunityType, string> = {
 };
 
 export function formatDate(date: Date | string | null | undefined): string {
-  if (!date) return "—";
+  if (!date) return "-";
   return new Date(date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -47,9 +47,9 @@ export function formatDateRange(
   start: Date | string | null | undefined,
   end: Date | string | null | undefined
 ): string {
-  if (!start) return "—";
+  if (!start) return "-";
   if (!end) return formatDate(start);
-  return `${formatDate(start)} – ${formatDate(end)}`;
+  return `${formatDate(start)} - ${formatDate(end)}`;
 }
 
 export function daysUntil(date: Date | string): number {

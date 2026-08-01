@@ -24,5 +24,5 @@ Conferences, workshops, fellowships, grants, volunteer roles, calls for papersâ€
 Rate limits, terms of use, regions or fields it covers.
 
 > If the source has no feed or API, the quickest route is adding entries to
-> [`data/curated.json`](../../data/curated.json) in a pull request â€” see
+> [`data/curated.json`](../../data/curated.json) in a pull request, see
 > [CONTRIBUTING.md](../../CONTRIBUTING.md).

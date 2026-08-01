@@ -77,7 +77,7 @@ export const grantsGovAdapter: SourceAdapter = {
           externalId: hit.id,
           title,
           description: [
-            `${title} — a US federal funding opportunity`,
+            `${title}, a US federal funding opportunity`,
             hit.agency ? ` from ${hit.agency}` : "",
             ` (opportunity number ${hit.number}).`,
             " See the official Grants.gov listing for eligibility, award amounts, and application instructions.",

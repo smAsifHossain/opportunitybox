@@ -42,7 +42,7 @@ export function Hero() {
           className="mt-5 max-w-2xl text-balance text-base text-muted-foreground sm:text-lg"
         >
           Funded workshops, fellowships, conferences, trainings, volunteer roles,
-          and calls for papers from around the world — with deadlines, funding
+          and calls for papers from around the world, with deadlines, funding
           details, and application links in one place.
         </motion.p>
 

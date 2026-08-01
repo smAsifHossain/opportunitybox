@@ -57,7 +57,7 @@ const opportunities: SeedOpportunity[] = [
     field: "Artificial Intelligence",
   },
   {
-    title: "NeurIPS 2026 — Call for Papers",
+    title: "NeurIPS 2026: Call for Papers",
     description:
       "The Thirty-ninth Annual Conference on Neural Information Processing Systems. Submissions are invited on all aspects of machine learning, neuroscience, statistics, and optimization. One of the most prestigious venues in AI research.",
     type: OpportunityType.CFP_CONFERENCE,
@@ -119,7 +119,7 @@ const opportunities: SeedOpportunity[] = [
     field: "Physics",
   },
   {
-    title: "ICLR 2027 — Call for Papers",
+    title: "ICLR 2027: Call for Papers",
     description:
       "The International Conference on Learning Representations invites submissions on deep learning and representation learning, spanning theory, applications, and infrastructure.",
     type: OpportunityType.CFP_CONFERENCE,
@@ -149,7 +149,7 @@ const opportunities: SeedOpportunity[] = [
   {
     title: "NSF Graduate Research Fellowship Program (GRFP)",
     description:
-      "The GRFP provides three years of financial support — an annual stipend plus cost-of-education allowance — for outstanding US graduate students in NSF-supported STEM disciplines.",
+      "The GRFP provides three years of financial support (an annual stipend plus cost-of-education allowance) for outstanding US graduate students in NSF-supported STEM disciplines.",
     type: OpportunityType.GRANT,
     homepageUrl: "https://www.nsfgrfp.org",
     applyUrl: "https://www.research.gov/grfp/",
@@ -161,7 +161,7 @@ const opportunities: SeedOpportunity[] = [
     field: "All STEM Fields",
   },
   {
-    title: "DAAD EPOS Scholarships — Development-Related Postgraduate Courses",
+    title: "DAAD EPOS Scholarships, Development-Related Postgraduate Courses",
     description:
       "German Academic Exchange Service scholarships for professionals from developing countries to pursue master's degrees in Germany, covering tuition, travel, insurance, and a monthly stipend.",
     type: OpportunityType.FELLOWSHIP,
@@ -174,7 +174,7 @@ const opportunities: SeedOpportunity[] = [
     field: "All Fields",
   },
   {
-    title: "CHI 2027 — Call for Papers",
+    title: "CHI 2027: Call for Papers",
     description:
       "The ACM Conference on Human Factors in Computing Systems is the premier international venue for human-computer interaction research.",
     type: OpportunityType.CFP_CONFERENCE,
@@ -219,7 +219,7 @@ const opportunities: SeedOpportunity[] = [
     field: "Artificial Intelligence",
   },
   {
-    title: "IEEE Transactions on AI — Special Issue on Trustworthy LLMs",
+    title: "IEEE Transactions on AI, Special Issue on Trustworthy LLMs",
     description:
       "Call for journal papers on safety, alignment, robustness, interpretability, and evaluation of large language models. Original research and survey papers welcome.",
     type: OpportunityType.CFP_JOURNAL,
@@ -258,7 +258,7 @@ const opportunities: SeedOpportunity[] = [
     field: "Natural Sciences",
   },
   {
-    title: "Grace Hopper Celebration — Student Scholarships",
+    title: "Grace Hopper Celebration, Student Scholarships",
     description:
       "Scholarships covering registration, travel, and lodging for students and faculty to attend the world's largest gathering of women and non-binary technologists.",
     type: OpportunityType.CONFERENCE,
@@ -331,7 +331,7 @@ const opportunities: SeedOpportunity[] = [
     field: "Software Engineering",
   },
   {
-    title: "ACL 2026 — Call for Papers",
+    title: "ACL 2026: Call for Papers",
     description:
       "The Annual Meeting of the Association for Computational Linguistics invites papers on all areas of natural language processing and computational linguistics.",
     type: OpportunityType.CFP_CONFERENCE,
@@ -365,7 +365,7 @@ const opportunities: SeedOpportunity[] = [
     deadline: days(18),
     online: true,
     funding: FundingLevel.FULLY_FUNDED,
-    fundingNotes: "Stipend of $1,500–$6,600 depending on project size and location.",
+    fundingNotes: "Stipend of $1,500-$6,600 depending on project size and location.",
     tags: ["open-source", "students", "remote", "mentorship"],
     field: "Software Engineering",
   },
@@ -384,7 +384,7 @@ const opportunities: SeedOpportunity[] = [
     field: "Economics",
   },
   {
-    title: "Nature Communications — Special Collection on Climate Adaptation",
+    title: "Nature Communications, Special Collection on Climate Adaptation",
     description:
       "Open call for primary research on climate change adaptation strategies, spanning environmental science, economics, and public health.",
     type: OpportunityType.CFP_JOURNAL,
@@ -409,7 +409,7 @@ const opportunities: SeedOpportunity[] = [
     field: "Science Communication",
   },
   {
-    title: "ICSE 2027 — Call for Papers",
+    title: "ICSE 2027: Call for Papers",
     description:
       "The International Conference on Software Engineering is the premier venue for software engineering research, covering testing, program analysis, AI for SE, and empirical studies.",
     type: OpportunityType.CFP_CONFERENCE,
@@ -422,7 +422,7 @@ const opportunities: SeedOpportunity[] = [
     field: "Software Engineering",
   },
   {
-    title: "Open Source Summit Europe — Diversity Scholarship",
+    title: "Open Source Summit Europe, Diversity Scholarship",
     description:
       "The Linux Foundation offers complimentary registration and travel funding for community members from underrepresented groups to attend Open Source Summit Europe.",
     type: OpportunityType.CONFERENCE,

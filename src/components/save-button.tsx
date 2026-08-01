@@ -35,7 +35,7 @@ export function SaveButton({
       const result = await toggleSave(opportunityId);
       if ("error" in result) {
         setSaved(!next);
-        toast.error("Could not update — please try again.");
+        toast.error("Could not update, please try again.");
       } else if (result.saved) {
         toast.success("Saved to your dashboard");
       }

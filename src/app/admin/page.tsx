@@ -100,7 +100,7 @@ export default async function AdminPage() {
         </h2>
         {pendingList.length === 0 ? (
           <p className="mt-4 rounded-xl border border-dashed border-border py-10 text-center text-sm text-muted-foreground">
-            All clear — nothing waiting for review.
+            All clear. Nothing waiting for review.
           </p>
         ) : (
           <ul className="mt-4 space-y-4">
@@ -119,7 +119,7 @@ export default async function AdminPage() {
                     <p className="mt-1 text-xs text-muted-foreground">
                       Submitted {formatDate(opp.createdAt)} by{" "}
                       {opp.submittedBy?.name ?? "unknown"} (
-                      {opp.submittedBy?.email ?? "—"}) · deadline{" "}
+                      {opp.submittedBy?.email ?? "-"}) · deadline{" "}
                       {formatDate(opp.deadline)}
                     </p>
                   </div>
@@ -174,7 +174,7 @@ export default async function AdminPage() {
         <h2 className="text-xl font-bold tracking-tight">Data sources</h2>
         {sources.length === 0 ? (
           <p className="mt-4 rounded-xl border border-dashed border-border py-10 text-center text-sm text-muted-foreground">
-            No sources have run yet — press “Run ingestion now” to fetch live
+            No sources have run yet. Press “Run ingestion now” to fetch live
             data from confs.tech, ccf-deadlines, ai-deadlines, and Grants.gov.
           </p>
         ) : (
@@ -228,7 +228,7 @@ export default async function AdminPage() {
                             {run.status}
                           </Badge>
                         ) : (
-                          "—"
+                          "-"
                         )}
                         {run?.error && (
                           <p
@@ -242,7 +242,7 @@ export default async function AdminPage() {
                       <TableCell className="text-right tabular-nums text-muted-foreground">
                         {run
                           ? `${run.added} / ${run.updated} / ${run.skipped} / ${run.failed}`
-                          : "—"}
+                          : "-"}
                       </TableCell>
                     </TableRow>
                   );

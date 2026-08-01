@@ -55,7 +55,7 @@ async function runAdapter(
       summary.status = "SUCCESS";
       await db.ingestionRun.update({
         where: { id: run.id },
-        data: { status: "SUCCESS", finishedAt: new Date(), error: "Source disabled — skipped" },
+        data: { status: "SUCCESS", finishedAt: new Date(), error: "Source disabled, skipped" },
       });
       return summary;
     }
@@ -150,7 +150,7 @@ async function expireStale(db: PrismaClient): Promise<number> {
 }
 
 /**
- * Run every adapter (each isolated — one broken source never blocks the
+ * Run every adapter (each isolated, so one broken source never blocks the
  * rest), then expire stale records. Returns per-source summaries.
  */
 export async function runIngestion(db: PrismaClient): Promise<{

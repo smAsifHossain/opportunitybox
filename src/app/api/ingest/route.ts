@@ -5,7 +5,7 @@ import { runIngestion } from "@/ingestion/pipeline";
 export const maxDuration = 300;
 
 /**
- * Cron-triggered ingestion endpoint. Protected by CRON_SECRET — use either
+ * Cron-triggered ingestion endpoint. Protected by CRON_SECRET. Use either
  * `Authorization: Bearer <secret>` (Vercel Cron convention) or `?secret=`.
  * The GitHub Action runs `npm run ingest` directly instead; this endpoint is
  * a fallback for platforms with built-in cron.

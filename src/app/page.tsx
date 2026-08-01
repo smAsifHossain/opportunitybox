@@ -179,7 +179,7 @@ export default async function HomePage() {
           <p className="mx-auto mt-4 max-w-2xl text-balance text-muted-foreground">
             A fully funded workshop, found only because a professor mentioned it
             in passing. How many others slipped by unheard? OpportunityBox brings every
-            opportunity into one open, searchable place — so the ones that change
+            opportunity into one open, searchable place, so the ones that change
             your path reach you, not just the well-connected few.
           </p>
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">

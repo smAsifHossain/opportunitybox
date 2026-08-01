@@ -41,7 +41,7 @@ export default function AboutPage() {
               AI Unlocked
             </a>
             , a workshop funded by NAIRR and NSF that fully reimbursed
-            participants — but only because his professor happened to mention it
+            participants, but only because his professor happened to mention it
             in passing. No mailing list, no central directory, no way to find
             it. One conversation was the difference between attending and never
             knowing it existed.
@@ -50,14 +50,14 @@ export default function AboutPage() {
             That raised an uncomfortable question: <em>how many opportunities
             does everyone miss simply because the information never reaches
             them?</em> Funded workshops, fellowships, summer schools, travel
-            grants, calls for papers — they&apos;re scattered across hundreds of
+            grants, calls for papers. They&apos;re scattered across hundreds of
             websites, mailing lists, and word-of-mouth networks that favor the
             already-connected.
           </p>
           <p>
             OpportunityBox is the fix: one open-source, free directory of conferences,
             workshops, trainings, fellowships, grants, volunteer roles, and
-            calls for papers from around the world — each with its deadline,
+            calls for papers from around the world, each with its deadline,
             funding details, and application link.
           </p>
           <p>
@@ -81,7 +81,7 @@ export default function AboutPage() {
             >
               giving it a star on GitHub
             </a>{" "}
-            ⭐ — it helps more people discover these opportunities.
+            ⭐. It helps more people discover these opportunities.
           </p>
         </div>
       </FadeIn>

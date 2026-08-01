@@ -79,7 +79,7 @@ export const ccfDeadlinesAdapter: SourceAdapter = {
 
         out.push({
           externalId: edition.id,
-          title: `${conf.title} ${edition.year} — Call for Papers`,
+          title: `${conf.title} ${edition.year}, Call for Papers`,
           description: [
             conf.description ?? conf.title,
             ".",

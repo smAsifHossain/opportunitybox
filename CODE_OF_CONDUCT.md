@@ -26,7 +26,7 @@ Report problems to **s.m.asif.hossain.1204@gmail.com**. Reports are handled conf
 
 ## Scope
 
-This applies in all project spaces — the repository, issues, pull requests, discussions — and whenever someone is representing the project in public.
+This applies in all project spaces (the repository, issues, pull requests, discussions) and whenever someone is representing the project in public.
 
 ---
 

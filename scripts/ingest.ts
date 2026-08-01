@@ -20,7 +20,7 @@ async function main() {
     if (run.status === "SUCCESS") {
       console.log(`✔ ${run.source}: ${counts}`);
     } else {
-      console.error(`✖ ${run.source}: FAILED — ${run.error} (${counts})`);
+      console.error(`✖ ${run.source}: FAILED, ${run.error} (${counts})`);
     }
   }
   console.log(`Expired ${expired} past-deadline records.`);

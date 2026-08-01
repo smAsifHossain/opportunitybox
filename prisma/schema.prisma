@@ -75,7 +75,7 @@ model Opportunity {
   source     Source? @relation(fields: [sourceId], references: [id])
   sourceId   String?
   externalId String?
-  // Hash of the normalized payload — lets ingestion skip unchanged records.
+  // Hash of the normalized payload, used to skip unchanged records.
   contentHash String?
 
   submittedBy   User?   @relation("SubmittedOpportunities", fields: [submittedById], references: [id])

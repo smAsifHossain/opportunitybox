@@ -20,7 +20,7 @@ export default async function SubmitPage() {
           Share an <span className="text-gradient">opportunity</span>
         </h1>
         <p className="mt-2 text-muted-foreground">
-          Know about something others shouldn&apos;t miss? Submit it here — a
+          Know about something others shouldn&apos;t miss? Submit it here. A
           moderator will review it before it goes live.
         </p>
       </header>

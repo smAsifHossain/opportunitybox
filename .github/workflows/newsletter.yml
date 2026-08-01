@@ -10,8 +10,8 @@ jobs:
   send-digest:
     runs-on: ubuntu-latest
     # Requires repo secrets:
-    #   APP_URL     — deployed base URL, e.g. https://opportunitybox.vercel.app
-    #   CRON_SECRET — same value as the CRON_SECRET env var on the server
+    #   APP_URL:     deployed base URL, e.g. https://opportunitybox.vercel.app
+    #   CRON_SECRET: same value as the CRON_SECRET env var on the server
     steps:
       - name: Trigger digest endpoint
         run: |

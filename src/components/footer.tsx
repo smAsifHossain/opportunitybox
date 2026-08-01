@@ -22,7 +22,7 @@ export function Footer({ newsletterSlot }: { newsletterSlot?: React.ReactNode })
             rel="noreferrer"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
           >
-            <GitHubIcon className="size-4" /> Open source on GitHub — support us
+            <GitHubIcon className="size-4" /> Open source on GitHub, support us
             with a ⭐
           </a>
         </div>

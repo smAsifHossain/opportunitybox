@@ -61,7 +61,7 @@ export async function registerAction(
 
   return {
     success:
-      "Account created! Check your inbox for a verification link — you'll be able to log in right after confirming your email.",
+      "Account created! Check your inbox for a verification link. You'll be able to log in right after confirming your email.",
   };
 }
 
@@ -82,7 +82,7 @@ export async function loginAction(
       await sendVerificationEmail(user.id, email);
       return {
         error:
-          "Your email isn't verified yet. We just sent you a fresh verification link — check your inbox.",
+          "Your email isn't verified yet. We just sent you a fresh verification link. Check your inbox.",
       };
     }
   }
@@ -106,7 +106,7 @@ export async function forgotPasswordAction(
   if (!parsed.success) return { error: "Please enter a valid email address." };
 
   const user = await db.user.findUnique({ where: { email: parsed.data } });
-  // Same response whether or not the account exists — don't leak which
+  // Same response whether or not the account exists, so we don't leak which
   // emails are registered.
   if (user?.passwordHash) {
     await sendPasswordResetEmail(user.id, user.email);

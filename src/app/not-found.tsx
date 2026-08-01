@@ -10,7 +10,7 @@ export default function NotFound() {
         Page not <span className="text-gradient">found</span>
       </h1>
       <p className="mt-2 text-sm text-muted-foreground">
-        This page doesn&apos;t exist — maybe the opportunity expired, or the
+        This page doesn&apos;t exist. Maybe the opportunity expired, or the
         link is off. The directory, however, is very much alive.
       </p>
       <div className="mt-6 flex gap-3">

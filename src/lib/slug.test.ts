@@ -3,7 +3,7 @@ import { opportunitySlug, shortHash, slugify } from "./slug";
 
 describe("slugify", () => {
   it("lowercases, strips accents and punctuation", () => {
-    expect(slugify("NeurIPS 2026 — Call for Papers!")).toBe(
+    expect(slugify("NeurIPS 2026: Call for Papers!")).toBe(
       "neurips-2026-call-for-papers"
     );
     expect(slugify("Café & Résumé")).toBe("cafe-resume");
