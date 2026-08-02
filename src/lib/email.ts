@@ -4,27 +4,27 @@ import nodemailer from "nodemailer";
 /**
  * Email has three modes, picked in this order:
  *
- *   1. SMTP, when GMAIL_USER and GMAIL_APP_PASSWORD are set. Mail is sent
- *      through Gmail from your own address, which works without owning a
- *      domain. Gmail allows roughly 500 recipients a day on a free account.
+ *   1. SMTP, when SMTP_HOST, SMTP_USER and SMTP_PASS are set. Works with any
+ *      provider: Brevo, Mailjet, SMTP2GO, Gmail and so on. Most of them let
+ *      you verify a single sender address, so no domain is required.
  *   2. Resend, when RESEND_API_KEY is set. Needs a verified domain before it
  *      will deliver to anyone other than the account owner.
  *   3. Neither, in which case messages are written to the console. The app
  *      runs normally, which is what you want in local development.
  */
-const gmailUser = process.env.GMAIL_USER;
-const gmailPassword = process.env.GMAIL_APP_PASSWORD;
+const smtpHost = process.env.SMTP_HOST;
+const smtpUser = process.env.SMTP_USER;
+const smtpPass = process.env.SMTP_PASS;
+const smtpPort = Number(process.env.SMTP_PORT ?? 587);
 
-export const smtpEnabled = Boolean(gmailUser && gmailPassword);
+export const smtpEnabled = Boolean(smtpHost && smtpUser && smtpPass);
 export const resendEnabled = Boolean(process.env.RESEND_API_KEY);
 export const emailEnabled = smtpEnabled || resendEnabled;
 
 /** Which transport is live, for health checks and admin display. */
 export const emailMode = smtpEnabled ? "smtp" : resendEnabled ? "resend" : "mock";
 
-const from =
-  process.env.EMAIL_FROM ??
-  (gmailUser ? `OpportunityBox <${gmailUser}>` : "OpportunityBox <onboarding@resend.dev>");
+const from = process.env.EMAIL_FROM ?? "OpportunityBox <onboarding@resend.dev>";
 
 let resend: Resend | null = null;
 let transport: nodemailer.Transporter | null = null;
@@ -37,8 +37,11 @@ function resendClient(): Resend {
 function smtpTransport(): nodemailer.Transporter {
   if (!transport) {
     transport = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: gmailUser, pass: gmailPassword },
+      host: smtpHost,
+      port: smtpPort,
+      // Port 465 is implicit TLS. Everything else starts plain and upgrades.
+      secure: smtpPort === 465,
+      auth: { user: smtpUser, pass: smtpPass },
     });
   }
   return transport;

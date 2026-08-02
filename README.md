@@ -125,7 +125,16 @@ The seed also creates an admin account, `admin@opportunitybox.local` with the pa
 
 **Email in development.** Registration needs a verification link and password resets are emailed. With no email provider configured, those emails are printed to the terminal running `npm run dev` instead of being sent, so copy the link from there. The seeded admin is already verified and can log in directly.
 
-To send real email, pick one of two options in `.env`. Gmail SMTP works without owning a domain: set `GMAIL_USER` to your address and `GMAIL_APP_PASSWORD` to an App Password from [Google account settings](https://myaccount.google.com/apppasswords), which requires 2 Step Verification. Alternatively set `RESEND_API_KEY`, though Resend only delivers to your own address until you verify a domain you own.
+To send real email, set the `SMTP_*` variables in `.env`. Any provider works, and most free tiers verify a single sender address so you do not need to own a domain:
+
+| Provider | Host | Free tier |
+|:-|:-|:-|
+| [Brevo](https://www.brevo.com) | `smtp-relay.brevo.com` | 300 emails a day |
+| [Mailjet](https://www.mailjet.com) | `in-v3.mailjet.com` | 200 a day, 6,000 a month |
+| [SMTP2GO](https://www.smtp2go.com) | `mail.smtp2go.com` | 1,000 a month |
+| Gmail | `smtp.gmail.com` | Needs an App Password |
+
+`RESEND_API_KEY` works as an alternative, but Resend only delivers to your own address until you verify a domain you own.
 
 **On Windows.** If PowerShell refuses to run npm scripts, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once. If `npm run db:start` fails with a DLL error, install the [Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe).
 
@@ -165,8 +174,8 @@ npm run db:seed
 | `AUTH_SECRET` | Output of `npx auth secret` |
 | `CRON_SECRET` | Any long random string |
 | `NEXT_PUBLIC_APP_URL` | Your deployment URL |
-| `GMAIL_USER`, `GMAIL_APP_PASSWORD` | Optional, sends email from your own Gmail address |
-| `RESEND_API_KEY` | Optional alternative to Gmail, needs a verified domain |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `EMAIL_FROM` | Optional, any SMTP provider such as Brevo |
+| `RESEND_API_KEY` | Optional alternative to SMTP, needs a verified domain |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Optional, for Google sign in |
 
 **4. Keep the data fresh.** In the repository settings, add `DATABASE_URL`, `APP_URL` and `CRON_SECRET` as Actions secrets. The included workflows then handle ingestion and the weekly digest.
