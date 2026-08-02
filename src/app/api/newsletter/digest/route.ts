@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { sendEmail, emailEnabled } from "@/lib/email";
+import { sendEmail, emailMode } from "@/lib/email";
 import { collectDigestData, renderDigestHtml } from "@/lib/digest";
 import { site } from "@/lib/site";
 
@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     sent,
     failed,
     recipients: recipients.length,
-    mode: emailEnabled ? "live" : "mock",
+    mode: emailMode,
     fresh: data.fresh.length,
     closing: data.closing.length,
   });
