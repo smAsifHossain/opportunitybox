@@ -473,12 +473,15 @@ async function main() {
   const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? "admin1234";
   await db.user.upsert({
     where: { email: adminEmail },
-    update: { role: "ADMIN" },
+    update: { role: "ADMIN", emailVerified: new Date() },
     create: {
       email: adminEmail,
       name: "OpportunityBox Admin",
       role: "ADMIN",
       passwordHash: await bcrypt.hash(adminPassword, 10),
+      // Seeded accounts skip the verification email, otherwise the first
+      // admin could never log in to a fresh deployment.
+      emailVerified: new Date(),
     },
   });
   console.log(`Admin user ready: ${adminEmail}`);
