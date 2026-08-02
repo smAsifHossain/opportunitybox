@@ -57,7 +57,16 @@ export async function registerAction(
     },
   });
 
-  await sendVerificationEmail(user.id, email);
+  const sent = await sendVerificationEmail(user.id, email);
+  if (!sent.ok) {
+    // The account exists, but telling people to check an inbox that will
+    // never receive anything is worse than admitting the send failed.
+    console.error(`Verification email to ${email} failed: ${sent.error}`);
+    return {
+      success:
+        "Account created, but the verification email could not be sent. Try logging in shortly to trigger a new one, and contact the site owner if it keeps failing.",
+    };
+  }
 
   return {
     success:
@@ -79,7 +88,14 @@ export async function loginAction(
   if (user?.passwordHash && !user.emailVerified) {
     const valid = await bcrypt.compare(password, user.passwordHash);
     if (valid) {
-      await sendVerificationEmail(user.id, email);
+      const resent = await sendVerificationEmail(user.id, email);
+      if (!resent.ok) {
+        console.error(`Verification resend to ${email} failed: ${resent.error}`);
+        return {
+          error:
+            "Your email isn't verified yet, and the verification email could not be sent. Please contact the site owner.",
+        };
+      }
       return {
         error:
           "Your email isn't verified yet. We just sent you a fresh verification link. Check your inbox.",
@@ -109,7 +125,12 @@ export async function forgotPasswordAction(
   // Same response whether or not the account exists, so we don't leak which
   // emails are registered.
   if (user?.passwordHash) {
-    await sendPasswordResetEmail(user.id, user.email);
+    const sent = await sendPasswordResetEmail(user.id, user.email);
+    // The reply stays identical either way, so failures are logged rather
+    // than shown.
+    if (!sent.ok) {
+      console.error(`Password reset email to ${user.email} failed: ${sent.error}`);
+    }
   }
   return {
     success:
