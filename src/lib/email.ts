@@ -5,16 +5,23 @@ import nodemailer from "nodemailer";
  * Email has three modes, picked in this order:
  *
  *   1. SMTP, when SMTP_HOST, SMTP_USER and SMTP_PASS are set. Works with any
- *      provider: Brevo, Mailjet, SMTP2GO, Gmail and so on. Most of them let
- *      you verify a single sender address, so no domain is required.
+ *      provider: Brevo, Mailjet, SMTP2GO and so on. Most of them let you
+ *      verify a single sender address, so no domain is required. Gmail has a
+ *      shortcut, see below.
  *   2. Resend, when RESEND_API_KEY is set. Needs a verified domain before it
  *      will deliver to anyone other than the account owner.
  *   3. Neither, in which case messages are written to the console. The app
  *      runs normally, which is what you want in local development.
  */
-const smtpHost = process.env.SMTP_HOST;
-const smtpUser = process.env.SMTP_USER;
-const smtpPass = process.env.SMTP_PASS;
+// Gmail is common enough to deserve a shortcut: set GMAIL_USER and
+// GMAIL_APP_PASSWORD and the host and port are filled in for you.
+const gmailUser = process.env.GMAIL_USER;
+const gmailPassword = process.env.GMAIL_APP_PASSWORD;
+const usingGmailShortcut = Boolean(!process.env.SMTP_HOST && gmailUser && gmailPassword);
+
+const smtpHost = usingGmailShortcut ? "smtp.gmail.com" : process.env.SMTP_HOST;
+const smtpUser = usingGmailShortcut ? gmailUser : process.env.SMTP_USER;
+const smtpPass = usingGmailShortcut ? gmailPassword : process.env.SMTP_PASS;
 const smtpPort = Number(process.env.SMTP_PORT ?? 587);
 
 export const smtpEnabled = Boolean(smtpHost && smtpUser && smtpPass);
@@ -24,7 +31,11 @@ export const emailEnabled = smtpEnabled || resendEnabled;
 /** Which transport is live, for health checks and admin display. */
 export const emailMode = smtpEnabled ? "smtp" : resendEnabled ? "resend" : "mock";
 
-const from = process.env.EMAIL_FROM ?? "OpportunityBox <onboarding@resend.dev>";
+const from =
+  process.env.EMAIL_FROM ??
+  (smtpUser?.includes("@")
+    ? `OpportunityBox <${smtpUser}>`
+    : "OpportunityBox <onboarding@resend.dev>");
 
 let resend: Resend | null = null;
 let transport: nodemailer.Transporter | null = null;

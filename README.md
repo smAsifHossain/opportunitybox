@@ -134,6 +134,8 @@ To send real email, set the `SMTP_*` variables in `.env`. Any provider works, an
 | [SMTP2GO](https://www.smtp2go.com) | `mail.smtp2go.com` | 1,000 a month |
 | Gmail | `smtp.gmail.com` | Needs an App Password |
 
+For Gmail there is a shortcut: set `GMAIL_USER` and `GMAIL_APP_PASSWORD` instead of the four `SMTP_*` variables, and the host and port are filled in for you.
+
 `RESEND_API_KEY` works as an alternative, but Resend only delivers to your own address until you verify a domain you own.
 
 **On Windows.** If PowerShell refuses to run npm scripts, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once. If `npm run db:start` fails with a DLL error, install the [Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe).
@@ -174,7 +176,7 @@ npm run db:seed
 | `AUTH_SECRET` | Output of `npx auth secret` |
 | `CRON_SECRET` | Any long random string |
 | `NEXT_PUBLIC_APP_URL` | Your deployment URL |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `EMAIL_FROM` | Optional, any SMTP provider such as Brevo |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `EMAIL_FROM` | Optional, any SMTP provider such as Brevo. For Gmail use `GMAIL_USER` and `GMAIL_APP_PASSWORD` instead |
 | `RESEND_API_KEY` | Optional alternative to SMTP, needs a verified domain |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Optional, for Google sign in |
 
