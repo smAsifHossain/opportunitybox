@@ -7,6 +7,7 @@ import { AuthNav } from "@/components/auth-nav";
 import { Footer } from "@/components/footer";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/next";
 import { site } from "@/lib/site";
 
 const geistSans = Geist({
@@ -53,6 +54,8 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer newsletterSlot={<NewsletterForm />} />
           <Toaster richColors position="bottom-right" />
+          {/* Page views and visitors, no cookies and no personal data. */}
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

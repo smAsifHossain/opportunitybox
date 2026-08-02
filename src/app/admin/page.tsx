@@ -7,6 +7,7 @@ import {
   Copy,
   Database,
   Inbox,
+  Users,
 } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -31,7 +32,11 @@ export default async function AdminPage() {
   if (!session?.user) redirect("/login?next=/admin");
   if (session.user.role !== "ADMIN") redirect("/dashboard");
 
-  const [pendingList, counts, sources, duplicates] = await Promise.all([
+  const weekAgo = new Date();
+  weekAgo.setDate(weekAgo.getDate() - 7);
+
+  const [pendingList, counts, sources, duplicates, community, recentUsers] =
+    await Promise.all([
     db.opportunity.findMany({
       where: { status: "PENDING" },
       include: { submittedBy: { select: { name: true, email: true } } },
@@ -56,14 +61,44 @@ export default async function AdminPage() {
       having: { homepageUrl: { _count: { gt: 1 } } },
       _count: true,
     }),
+    Promise.all([
+      db.user.count({ where: { createdAt: { gte: weekAgo } } }),
+      db.user.count({ where: { emailVerified: null } }),
+      db.newsletterSubscriber.count(),
+      db.user.count({ where: { newsletterOptIn: true } }),
+      db.savedOpportunity.count(),
+      db.opportunity.count({ where: { origin: "COMMUNITY" } }),
+    ]),
+    db.user.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 8,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        affiliation: true,
+        emailVerified: true,
+        createdAt: true,
+        _count: { select: { saved: true, submissions: true } },
+      },
+    }),
   ]);
   const [approved, pending, expired, users] = counts;
+  const [newUsers, unverified, subscribers, optedIn, saves, submitted] = community;
 
   const stats = [
     { icon: <CheckCircle2 className="size-4" />, label: "Live", value: approved },
     { icon: <Inbox className="size-4" />, label: "Pending review", value: pending },
     { icon: <Clock className="size-4" />, label: "Expired", value: expired },
     { icon: <Database className="size-4" />, label: "Users", value: users },
+  ];
+
+  const communityStats = [
+    { label: "New users this week", value: newUsers },
+    { label: "Awaiting verification", value: unverified },
+    { label: "Newsletter subscribers", value: subscribers + optedIn },
+    { label: "Saved opportunities", value: saves },
+    { label: "Community submissions", value: submitted },
   ];
 
   return (
@@ -92,6 +127,78 @@ export default async function AdminPage() {
           </div>
         ))}
       </div>
+
+      {/* Community */}
+      <section className="mt-10">
+        <h2 className="text-xl font-bold tracking-tight">Community</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Page views and visitor numbers live in the Vercel dashboard under
+          Analytics. These are the numbers only this app knows.
+        </p>
+
+        <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-5">
+          {communityStats.map((s) => (
+            <div
+              key={s.label}
+              className="rounded-xl border border-border/70 bg-card/70 p-4"
+            >
+              <p className="text-xs text-muted-foreground">{s.label}</p>
+              <p className="mt-1 text-2xl font-bold tabular-nums">{s.value}</p>
+            </div>
+          ))}
+        </div>
+
+        <h3 className="mt-8 flex items-center gap-2 text-sm font-semibold">
+          <Users className="size-4" /> Newest members
+        </h3>
+        {recentUsers.length === 0 ? (
+          <p className="mt-3 rounded-xl border border-dashed border-border py-8 text-center text-sm text-muted-foreground">
+            No accounts yet.
+          </p>
+        ) : (
+          <div className="mt-3 overflow-x-auto rounded-xl border border-border/70">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Affiliation</TableHead>
+                  <TableHead>Joined</TableHead>
+                  <TableHead className="text-right">Saved</TableHead>
+                  <TableHead className="text-right">Submitted</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {recentUsers.map((u) => (
+                  <TableRow key={u.id}>
+                    <TableCell className="font-medium">{u.name ?? "-"}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {u.email}
+                      {!u.emailVerified && (
+                        <Badge className="ml-2 bg-amber-500/15 text-amber-600 dark:text-amber-400">
+                          unverified
+                        </Badge>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {u.affiliation ?? "-"}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {formatDate(u.createdAt)}
+                    </TableCell>
+                    <TableCell className="text-right tabular-nums">
+                      {u._count.saved}
+                    </TableCell>
+                    <TableCell className="text-right tabular-nums">
+                      {u._count.submissions}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+      </section>
 
       {/* Moderation queue */}
       <section className="mt-10">
