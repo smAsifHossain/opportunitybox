@@ -4,6 +4,9 @@
 
 **Funded workshops, fellowships, conferences and calls for papers from around the world, in one searchable place.**
 
+### [opportunitybox.vercel.app](https://opportunitybox.vercel.app)
+
+[![Live site](https://img.shields.io/badge/live-opportunitybox.vercel.app-000000?logo=vercel)](https://opportunitybox.vercel.app)
 [![CI](https://github.com/smAsifHossain/opportunitybox/actions/workflows/ci.yml/badge.svg)](https://github.com/smAsifHossain/opportunitybox/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Next.js 16](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)

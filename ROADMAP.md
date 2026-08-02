@@ -45,7 +45,8 @@ Where the project is and where it is going. Items are grouped by release rather 
 
 Ordered roughly by how much difference each one makes.
 
-- [ ] Deploy publicly and put a screenshot in the README
+- [x] Deploy publicly, live at opportunitybox.vercel.app
+- [ ] Capture a screenshot of the live site for the README
 - [ ] Move the weekly digest out of the serverless function, since Vercel's free plan cuts requests off at ten seconds and a long subscriber list will hit that ceiling
 - [ ] Make the ingestion workflow exit cleanly when no database secret is configured, instead of failing on schedule
 - [ ] Deadline reminder emails, so saving an opportunity actually warns you before it closes
