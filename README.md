@@ -1,153 +1,271 @@
-# 🧭 OpportunityBox
+<div align="center">
+
+# OpportunityBox
+
+**Funded workshops, fellowships, conferences and calls for papers from around the world, in one searchable place.**
 
 [![CI](https://github.com/smAsifHossain/opportunitybox/actions/workflows/ci.yml/badge.svg)](https://github.com/smAsifHossain/opportunitybox/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Next.js 16](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Prisma%207-336791?logo=postgresql&logoColor=white)](https://www.prisma.io)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-**Never miss an opportunity again.**
+[Report a bug](https://github.com/smAsifHossain/opportunitybox/issues/new?template=bug_report.md) ·
+[Suggest a data source](https://github.com/smAsifHossain/opportunitybox/issues/new?template=data_source.md) ·
+[Contributing guide](CONTRIBUTING.md)
 
-OpportunityBox is a free, open-source directory of **conferences, workshops, trainings, fellowships, grants, hackathons, volunteer roles, and calls for papers** (for both conferences and journals) from around the world, each with its **deadline**, **funding status** (fully funded / partial / none), **application link**, and homepage, all in one searchable place.
+</div>
 
-> **Why it exists:** A fully funded NSF/NAIRR workshop ([AI Unlocked](https://nairrpilot.org/ai-unlocked)) was discovered only because a professor mentioned it in passing. Great opportunities shouldn't depend on who you happen to know; they should reach everyone. OpportunityBox was built to close that gap.
+## The problem
 
-Created by [S M Asif Hossain](https://www.linkedin.com/in/smasifhossain/), a PhD student in Computer Science at Wichita State University, in collaboration with The Maroon Lab.
+I attended a workshop called [AI Unlocked](https://nairrpilot.org/ai-unlocked), funded by NAIRR and NSF, which reimbursed participants in full. I only found out it existed because a professor mentioned it in passing. There was no mailing list to join, no directory to check, and no reason I would have heard about it otherwise.
 
-⭐ If this project helps you, please **star the repo**. It helps more people discover these opportunities.
+That is the normal case rather than the exception. Funded workshops, fellowships, summer schools, travel grants and calls for papers sit on hundreds of separate university pages, government portals and departmental mailing lists. The people who find them are usually the people who already know someone.
 
----
+## What it does
 
-## ✨ Features
+OpportunityBox pulls those listings in automatically and puts them behind one search box. At the time of writing that is roughly 470 open opportunities from 5 sources, 203 of them fully funded, spread across 46 countries. Ingestion runs every six hours, so nobody has to maintain the list by hand.
 
-- **🔎 Explore & filter**: full-text search plus filters for type, funding, online/in-person, country, and deadline-first sorting. Filter state lives in the URL, so any view is shareable. Past-deadline opportunities are hidden automatically.
-- **⏰ Live deadline countdowns**: color-coded chips (red < 7 days, amber < 30, green otherwise).
-- **🤖 Automated data ingestion**: adapters pull live opportunities every 6 hours from [confs.tech](https://github.com/tech-conferences/conference-data), [ccf-deadlines](https://github.com/ccfddl/ccf-deadlines), [ai-deadlines](https://github.com/huggingface/ai-deadlines), and the [Grants.gov API](https://www.grants.gov/api). One broken source never blocks the others.
-- **👤 Accounts**: register with email verification, log in (email/password or optional Google), reset forgotten passwords by email, and edit your profile (name, affiliation, contact number, password).
-- **🔖 Save & track**: bookmark opportunities and manage them from your dashboard.
-- **✍️ Community submissions**: anyone can submit an opportunity; moderators approve or reject (with a reason) before it goes live.
-- **🛡️ Admin dashboard**: moderation queue, duplicate detection, per-source health, and a manual ingest trigger.
-- **📬 Weekly newsletter**: new + closing-soon opportunities, with one-click unsubscribe. Works without any email provider in development (emails print to the console).
-- **🌗 Modern animated UI**: dark-mode-first, smooth motion, fully responsive, respects reduced-motion.
+Every listing carries the four things you actually need before deciding whether to apply:
 
-## 🛠️ Tech stack
+1. When the deadline is, with a countdown
+2. Whether it is funded, and what the funding covers
+3. Where to apply, linked directly
+4. Where it came from, so you can verify it
 
-Next.js 16 (App Router, React Server Components) · TypeScript · Tailwind CSS v4 · shadcn/ui (Base UI) · Motion · Prisma 7 + PostgreSQL · Auth.js v5 · Zod · Resend · Vitest
+Listings whose deadline has passed drop out of the directory on their own.
 
----
+## Features
 
-## 🚀 Run it locally
+| Area | What you get |
+|:-|:-|
+| Search and filter | Full text search over titles, descriptions, fields and countries, plus filters for type, funding level, online or in person, and country. Filter state lives in the URL, so any view can be shared or bookmarked |
+| Deadline countdowns | Color coded chips that turn amber under 30 days and red under 7. Expired listings are hidden automatically |
+| Ten opportunity types | Conferences, workshops, trainings, fellowships, grants, hackathons, volunteer roles, and calls for papers for both conferences and journals |
+| Accounts | Registration with email verification, password reset by email, optional Google sign in, and an editable profile with name, affiliation and contact number |
+| Saved opportunities | Bookmark anything and see it on your dashboard, ordered by whichever deadline is closest |
+| Community submissions | Anyone can submit an opportunity. It waits in a moderation queue until an admin approves it, and the submitter can track its status |
+| Admin tools | Moderation queue with reasons for rejection, duplicate detection by homepage URL, per source health showing the last run and its counts, and a manual ingestion trigger |
+| Weekly digest | New and closing soon opportunities by email, with one click unsubscribe. Works with no email provider configured, in which case messages are written to the console |
+| Interface | Dark mode by default with a light theme, motion that respects reduced motion preferences, and layouts that work on a phone |
 
-### Prerequisites
-- **Node.js 20.9+** and npm
-- No database install needed. A local PostgreSQL is bundled (via `embedded-postgres`). Docker is an optional alternative.
+## Where the data comes from
 
-### Steps
+Five adapters run on a schedule. Each one is isolated, so a source that breaks or changes its format cannot stop the others from running.
+
+| Source | Covers | Access |
+|:-|:-|:-|
+| [confs.tech](https://github.com/tech-conferences/conference-data) | Tech conferences worldwide, including CFP deadlines | Open dataset on GitHub, no key needed |
+| [ccf-deadlines](https://github.com/ccfddl/ccf-deadlines) | Computer science conference deadlines with CCF ranks | Open dataset on GitHub, no key needed |
+| [ai-deadlines](https://huggingface.co/spaces/huggingface/ai-deadlines) | AI and machine learning conference deadlines | Open dataset, no key needed |
+| [Grants.gov](https://www.grants.gov/api/api-guide) | United States federal grants, fellowships and training programs | Public API, no key needed |
+| [data/curated.json](data/curated.json) | Anything with no API at all, such as NAIRR program calls and one off university workshops | Edited by pull request |
+
+That last row is the important one. Plenty of good opportunities live on a single university page with no feed of any kind, and the honest answer is that a scraper per website breaks constantly. Adding an entry to `data/curated.json` takes one pull request, and entries disappear on their own once their deadline passes. Details are in [docs/data-sources.md](docs/data-sources.md).
+
+## How it works
+
+```
+GitHub Actions (every 6 hours)
+        |
+        v
+  ingestion pipeline
+        |
+        +-> adapter per source, each isolated
+        +-> validate against a schema, drop bad records
+        +-> hash the payload, skip anything unchanged
+        +-> upsert by (source, external id)
+        +-> write a run log for the admin dashboard
+        |
+        v
+   PostgreSQL  <->  Next.js app (pages, API, auth)
+                          |
+                          v
+                    people looking
+                    for opportunities
+```
+
+Records from the structured sources go live immediately, since they already come from vetted datasets. Community submissions go into the moderation queue instead. Every run is logged per source and shown on the admin dashboard, so a source that quietly stops returning data is visible rather than silent.
+
+## Running it locally
+
+You need Node.js 20.9 or newer. You do not need to install PostgreSQL, because a local one is bundled through `embedded-postgres`. Docker works too if you prefer it.
 
 ```bash
 git clone https://github.com/smAsifHossain/opportunitybox.git
 cd opportunitybox
 npm install
-cp .env.example .env        # then generate a secret: npx auth secret  → paste into AUTH_SECRET
+cp .env.example .env
 ```
 
-**Open two terminals:**
+Generate a secret with `npx auth secret` and paste it into `AUTH_SECRET`. Then open two terminals:
 
 ```bash
-# Terminal 1: start the local database (keep it running)
+# first terminal, leave it running
 npm run db:start
 ```
 
 ```bash
-# Terminal 2: set up data and run the app
-npm run db:migrate          # create the database tables
-npm run db:seed             # ~30 sample opportunities + a dev admin account
-npm run dev                 # → http://localhost:3000
+# second terminal
+npm run db:migrate
+npm run db:seed
+npm run dev
 ```
 
-Optionally pull **live data** from all sources:
+The app comes up on http://localhost:3000 with about 30 sample opportunities. To pull real data from all five sources:
 
 ```bash
 npm run ingest
 ```
 
-The seed creates an admin account, `admin@opportunitybox.local` / `admin1234` (override with `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` in `.env`). **Change this in any real deployment.**
+The seed also creates an admin account, `admin@opportunitybox.local` with the password `admin1234`. Override those with `SEED_ADMIN_EMAIL` and `SEED_ADMIN_PASSWORD`, and change them before any real deployment.
 
-> **📧 Emails in local development:** registration requires email verification and password resets are emailed. Without a `RESEND_API_KEY`, those emails are **printed to the `npm run dev` terminal**, so copy the verification / reset link from there into your browser. (The seeded admin is already verified, so you can log in with it directly.)
+**Email in development.** Registration needs a verification link and password resets are emailed. With no `RESEND_API_KEY` set, those emails are printed to the terminal running `npm run dev` instead of being sent, so copy the link from there. The seeded admin is already verified and can log in directly.
 
-> **🪟 Windows note:** PowerShell may block `npm` scripts, so run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once. If `npm run db:start` fails with a DLL error, install the [Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe).
+**On Windows.** If PowerShell refuses to run npm scripts, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once. If `npm run db:start` fails with a DLL error, install the [Visual C++ Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe).
 
-### Useful scripts
+### Scripts
 
-| Script | What it does |
-|---|---|
-| `npm run dev` | Dev server |
-| `npm run db:start` | Local PostgreSQL (data in `.local/pgdata`) |
+| Command | What it does |
+|:-|:-|
+| `npm run dev` | Development server |
+| `npm run db:start` | Local PostgreSQL, data kept in `.local/pgdata` |
 | `npm run db:migrate` | Apply database migrations |
-| `npm run db:seed` | Seed sample data + admin user |
-| `npm run ingest` | Run all source adapters once |
-| `npm run normalize:countries` | Re-apply country name normalization to existing rows |
-| `npm test` | Unit tests (Vitest) |
-| `npm run lint` / `npm run typecheck` / `npm run build` | Lint / type check / production build |
+| `npm run db:seed` | Sample opportunities and an admin account |
+| `npm run ingest` | Run all five adapters once |
+| `npm run normalize:countries` | Reapply country name normalization to existing rows |
+| `npm test` | Unit tests |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript, no emit |
+| `npm run build` | Production build |
 
----
+## Deploying it for free
 
-## ☁️ Deploy for free (Vercel + Neon)
+The whole stack fits inside free tiers and stays online continuously.
 
-The whole stack runs on free tiers, stays **online 24/7**, and handles login and cloud data storage. See [the FAQ below](#-deployment-faq).
+**1. Database.** Create a project on [Neon](https://neon.tech) and copy the connection string.
 
-1. **Database (cloud, free):** create a project at [neon.tech](https://neon.tech) and copy its connection string.
-2. **Migrate & seed it once** from your machine:
-   ```bash
-   # PowerShell:  $env:DATABASE_URL="<neon-string>"; npx prisma migrate deploy; npm run db:seed
-   # macOS/Linux: DATABASE_URL="<neon-string>" npx prisma migrate deploy && DATABASE_URL="<neon-string>" npm run db:seed
-   ```
-3. **Host (free):** import this repo at [vercel.com](https://vercel.com) → *Add New → Project*. Set these Environment Variables:
-   | Variable | Value |
-   |---|---|
-   | `DATABASE_URL` | your Neon connection string |
-   | `AUTH_SECRET` | output of `npx auth secret` |
-   | `CRON_SECRET` | any long random string |
-   | `NEXT_PUBLIC_APP_URL` | your deployment URL, e.g. `https://opportunitybox.vercel.app` |
-   | `RESEND_API_KEY`, `EMAIL_FROM` | *(optional)* real emails via [resend.com](https://resend.com) |
-   | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | *(optional)* Google login |
-4. Click **Deploy**. Live in ~2 minutes.
-5. **Keep data fresh (free):** in this repo → *Settings → Secrets and variables → Actions*, add `DATABASE_URL` (Neon), `APP_URL`, and `CRON_SECRET`. The included GitHub Actions then auto-ingest every 6 hours and send the weekly digest.
+**2. Migrate it once** from your machine, with `DATABASE_URL` set to that string:
 
-### ❓ Deployment FAQ
-
-- **Does it handle sign-up / login?** Yes. Auth.js runs as part of the deployed app, so registration, email verification, login, password reset, and (optionally) Google sign-in all work in production.
-- **Is data stored in the cloud?** Yes. All data (users, saved opportunities, submissions, newsletter subscribers, ingested listings) lives in your **Neon PostgreSQL** database in the cloud, not on your computer. Your local database is only for development.
-- **Will it be online 24/7?** Yes. Vercel serves the app continuously on its global network; Neon keeps the database available. Both free tiers are fine for a project like this. (Neon's free database may "sleep" after inactivity and wakes on the next request within a second or two, which is invisible to users in practice.)
-- **Is it really free?** Yes, for typical usage: Vercel Hobby (hosting), Neon free tier (database), Resend free tier (3,000 emails/month), and GitHub Actions (free for public repos). No credit card required to start.
-- **Email note:** Resend's free tier sends from a test domain until you verify your own domain. Without `RESEND_API_KEY`, the deployed app still works. It just logs emails instead of sending, which means verification links won't reach users, so add Resend before inviting real sign-ups.
-
----
-
-## 🧩 Architecture
-
-```
-├─ src/
-│  ├─ app/               # routes: home, opportunities, auth, dashboard, submit, admin, api
-│  ├─ components/        # UI building blocks (ui/ = shadcn primitives, admin/ = admin widgets)
-│  ├─ ingestion/
-│  │  ├─ types.ts        # NormalizedOpportunity schema + SourceAdapter interface
-│  │  ├─ adapters/       # confs-tech, ccf-deadlines, ai-deadlines, grants-gov, curated
-│  │  └─ pipeline.ts     # validate → dedupe → upsert → log each run
-│  └─ lib/               # db, auth, email, digest, country normalization, query builders
-├─ prisma/               # schema, migrations, seed data
-├─ scripts/              # dev database, ingestion runner, data maintenance
-├─ data/curated.json     # hand-curated opportunities (sources without an API)
-├─ docs/                 # data source documentation
-└─ .github/workflows/    # CI, 6-hourly ingestion, weekly newsletter
+```bash
+npx prisma migrate deploy
+npm run db:seed
 ```
 
-Ingested records from trusted structured sources go live immediately; community submissions wait in the moderation queue. Every ingestion run is logged per source and surfaced on the admin dashboard.
+**3. Host the app.** Import the repository on [Vercel](https://vercel.com) and set these variables:
 
-**Adding a data source** is one file. Implement `SourceAdapter` in `src/ingestion/adapters/`, register it in `pipeline.ts`, and document it in [docs/data-sources.md](docs/data-sources.md). For sources without an API (university pages, one-off funded events), just add an entry to [`data/curated.json`](data/curated.json) via pull request. See [CONTRIBUTING.md](CONTRIBUTING.md).
+| Variable | Value |
+|:-|:-|
+| `DATABASE_URL` | Your Neon connection string |
+| `AUTH_SECRET` | Output of `npx auth secret` |
+| `CRON_SECRET` | Any long random string |
+| `NEXT_PUBLIC_APP_URL` | Your deployment URL |
+| `RESEND_API_KEY`, `EMAIL_FROM` | Optional, for real email through [Resend](https://resend.com) |
+| `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Optional, for Google sign in |
 
-## 🤝 Contributing
+**4. Keep the data fresh.** In the repository settings, add `DATABASE_URL`, `APP_URL` and `CRON_SECRET` as Actions secrets. The included workflows then handle ingestion and the weekly digest.
 
-Contributions of all kinds are welcome, and new data sources are the most valuable. See [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
+### Scheduled jobs
 
-## 📄 License
+| Workflow | Schedule | What it does |
+|:-|:-|:-|
+| [ci.yml](.github/workflows/ci.yml) | Every push and pull request | Lint, typecheck, tests, build, against a real PostgreSQL |
+| [ingest.yml](.github/workflows/ingest.yml) | Every 6 hours | Runs all adapters against the production database |
+| [newsletter.yml](.github/workflows/newsletter.yml) | Mondays at 13:00 UTC | Sends the weekly digest |
 
-[MIT](LICENSE), created by [S M Asif Hossain](https://www.linkedin.com/in/smasifhossain/), built for the community.
+### Questions people ask about deployment
+
+**Does sign up and login work once deployed?** Yes. Auth.js runs inside the deployed app, so registration, email verification, login, password reset and optional Google sign in all work in production.
+
+**Where does the data live?** In your Neon database in the cloud. Users, saved opportunities, submissions, subscribers and every ingested listing. The local database is only for development.
+
+**Will it stay online?** Yes. Vercel serves the app continuously. Neon suspends an idle database and wakes it on the next query in well under a second, which visitors do not notice.
+
+**Is it actually free?** For normal traffic, yes: Vercel Hobby, the Neon free tier, 3,000 emails a month on Resend, and GitHub Actions, which is free on public repositories. Note that Vercel's Hobby plan is for non commercial use, so a project that starts charging for something needs their paid plan.
+
+**Do I have to set up email?** The site runs without it, but verification links will never reach anyone, so nobody can finish signing up. Add a Resend key before inviting real users.
+
+## API
+
+There are two endpoints, both meant for schedulers rather than browsers, and both protected by `CRON_SECRET`.
+
+| Method | Route | Purpose |
+|:-|:-|:-|
+| `POST` | `/api/ingest` | Runs every adapter, then expires past deadline records |
+| `POST` | `/api/newsletter/digest` | Sends the weekly digest to subscribers |
+
+<details>
+<summary>Example call and response</summary>
+
+```bash
+curl -X POST https://your-deployment.vercel.app/api/ingest \
+  -H "Authorization: Bearer $CRON_SECRET"
+```
+
+```json
+{
+  "runs": [
+    { "source": "confs-tech", "status": "SUCCESS", "added": 39, "updated": 26, "skipped": 100, "failed": 0 },
+    { "source": "grants-gov", "status": "SUCCESS", "added": 107, "updated": 81, "skipped": 0, "failed": 0 }
+  ],
+  "expired": 163
+}
+```
+
+</details>
+
+A public read only API for the listings themselves does not exist yet. It is on the [roadmap](ROADMAP.md).
+
+## Project layout
+
+```
+src/
+  app/                routes: home, opportunities, auth, dashboard, submit, admin, api
+  components/         UI building blocks, ui/ holds the shadcn primitives
+  ingestion/
+    types.ts          the record shape every adapter must produce
+    adapters/         one file per source
+    pipeline.ts       validate, deduplicate, upsert, log
+  lib/                database, auth, email, digest, country names, query builders
+prisma/               schema, migrations, seed data
+scripts/              local database, ingestion runner, data maintenance
+data/curated.json     hand curated opportunities for sources with no API
+docs/                 data source notes
+.github/workflows/    CI, ingestion, newsletter
+```
+
+## How it compares
+
+| | OpportunityBox | WikiCFP | confs.tech | ccf-deadlines | ProFellow | Grants.gov |
+|:-|:-|:-|:-|:-|:-|:-|
+| Conferences and CFPs | Yes | Yes | Yes | Yes | No | No |
+| Fellowships and grants | Yes | No | No | No | Yes | Yes |
+| Workshops and training | Yes | Partial | No | No | Partial | Partial |
+| Says whether it is funded | Yes | No | No | No | Partial | Yes |
+| Deadline countdown | Yes | No | No | Yes | No | No |
+| Worldwide | Yes | Yes | Yes | Yes | Yes | No, US federal only |
+| Free, no account needed to browse | Yes | Yes | Yes | Yes | Account needed | Yes |
+| Open source | Yes | No | Yes, the data | Yes | No | Government |
+| Save and track opportunities | Yes | Partial | No | No | Yes | Yes |
+| Weekly email digest | Yes | Yes | No | No | Yes | Yes |
+| Anyone can submit a listing | Yes | Yes | Yes, by pull request | Yes, by pull request | No | No |
+
+Based on publicly visible features in August 2026. Several of these are excellent at the one thing they do, and two of them are sources OpportunityBox reads from. The gap being filled is that no single place covers funded workshops, fellowships and calls for papers together, and tells you the funding situation before you click.
+
+## Roadmap
+
+Shipped, planned and explicitly out of scope are all listed in [ROADMAP.md](ROADMAP.md). Released changes are in [CHANGELOG.md](CHANGELOG.md).
+
+## Contributing
+
+New data sources are the most useful contribution, and adding one means writing a single file. See [CONTRIBUTING.md](CONTRIBUTING.md) for the setup, the adapter contract and the checks to run before opening a pull request. Bug reports and corrections to listings are just as welcome.
+
+If the project is useful to you, starring the repository genuinely helps other people find it.
+
+## License and credits
+
+[MIT](LICENSE).
+
+Built by [S M Asif Hossain](https://www.linkedin.com/in/smasifhossain/), a PhD student in Computer Science at Wichita State University, in collaboration with The Maroon Lab.
+
+Data comes from [confs.tech](https://confs.tech), [ccf-deadlines](https://github.com/ccfddl/ccf-deadlines), [ai-deadlines](https://huggingface.co/spaces/huggingface/ai-deadlines) and [Grants.gov](https://www.grants.gov), all of whom publish openly. Always check the official page before applying, because listings can change after they are collected.
